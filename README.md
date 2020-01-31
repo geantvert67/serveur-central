@@ -12,3 +12,7 @@ DB_HOST=
 DB_USER=
 DB_PWD=
 ```
+
+### Usage
+
+Lancer en mode développement : `npm run start`
