@@ -1,3 +1,9 @@
 const auth_ctrl = require('../controllers/auth_ctrl');
 
-module.exports = [];
+module.exports = [
+    {
+        url: '/auth/signup',
+        method: 'post',
+        func: auth_ctrl.signup
+    }
+];
