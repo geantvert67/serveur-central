@@ -11,5 +11,11 @@ module.exports = [
         url: '/auth/signin',
         method: 'post',
         func: auth_ctrl.signin
+    },
+
+    {
+        url: '/whoami',
+        method: 'get',
+        func: [auth_ctrl.is_authenticated, auth_ctrl.whoami]
     }
 ];

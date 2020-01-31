@@ -1,5 +1,6 @@
 const db = require('../models'),
     jwt = require('jsonwebtoken'),
+    expressjwt = require('express-jwt'),
     secret = process.env.SECRET;
 
 module.exports = {
@@ -55,5 +56,25 @@ module.exports = {
                 .catch(err => next(err));
         }
         throw { status: 406, message: 'Paramètres invalides' };
-    }
+    },
+
+    whoami: (req, res, next) => {
+        return res.json(req.user);
+    },
+
+    is_authenticated: [
+        expressjwt({ secret }),
+        (req, res, next) => {
+            db.User.findByPk(req.user.id).then(user => {
+                if (!user) {
+                    throw {
+                        status: 404,
+                        message: "Cet utilisateur n'existe pas"
+                    };
+                }
+                req.user = user;
+                return next();
+            });
+        }
+    ]
 };
