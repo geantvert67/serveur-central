@@ -5,5 +5,11 @@ module.exports = [
         url: '/auth/signup',
         method: 'post',
         func: auth_ctrl.signup
+    },
+
+    {
+        url: '/auth/signin',
+        method: 'post',
+        func: auth_ctrl.signin
     }
 ];
