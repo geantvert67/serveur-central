@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
                 .catch(err => false);
         }
 
+        static hashPassword(password) {
+            return bcrypt.hashSync(password, bcrypt.genSaltSync(12));
+        }
+
         verifyPassword(password) {
             return bcrypt.compareSync(password, this.password);
         }
@@ -43,10 +47,6 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
-
-    User.beforeSave(user => {
-        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(12));
-    });
 
     return User;
 };

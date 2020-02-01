@@ -12,7 +12,10 @@ module.exports = {
             return db.User.usernameIsUnique(username)
                 .then(isUnique => {
                     if (isUnique) {
-                        return db.User.create({ username, password })
+                        return db.User.create({
+                            username,
+                            password: db.User.hashPassword(password)
+                        })
                             .then(user => {
                                 user.password = undefined;
                                 const token = jwt.sign(
