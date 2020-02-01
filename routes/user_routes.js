@@ -5,5 +5,11 @@ module.exports = [
         url: '/user',
         method: 'put',
         func: user_ctrl.update
+    },
+
+    {
+        url: '/user/password',
+        method: 'put',
+        func: user_ctrl.updatePassword
     }
 ];
