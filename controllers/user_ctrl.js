@@ -1,6 +1,10 @@
 const db = require('../models');
 
 module.exports = {
+    getCurrent: (req, res, next) => {
+        return res.json(req.user);
+    },
+
     update: (req, res, next) => {
         const username = req.body.username;
 

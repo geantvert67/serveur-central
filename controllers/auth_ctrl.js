@@ -61,10 +61,6 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
-    whoami: (req, res, next) => {
-        return res.json(req.user);
-    },
-
     is_authenticated: [
         expressjwt({ secret }),
         (req, res, next) => {

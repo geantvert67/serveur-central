@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
 
-app.use(/^(?!\/auth\/).*$/, auth_ctrl.is_authenticated);
+app.use(/^(?!\/(signin|signup)).*$/, auth_ctrl.is_authenticated);
 
 require('./routes')(app);
 
