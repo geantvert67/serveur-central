@@ -68,16 +68,18 @@ module.exports = {
     is_authenticated: [
         expressjwt({ secret }),
         (req, res, next) => {
-            db.User.findByPk(req.user.id).then(user => {
-                if (!user) {
-                    throw {
-                        status: 404,
-                        message: "Cet utilisateur n'existe pas"
-                    };
-                }
-                req.user = user;
-                return next();
-            });
+            db.User.findByPk(req.user.id)
+                .then(user => {
+                    if (!user) {
+                        throw {
+                            status: 404,
+                            message: "Cet utilisateur n'existe pas"
+                        };
+                    }
+                    req.user = user;
+                    return next();
+                })
+                .catch(err => next(err));
         }
     ]
 };
