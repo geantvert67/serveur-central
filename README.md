@@ -14,7 +14,7 @@ DB_PWD=
 SECRET=
 ```
 
-Voici un moyen trsè simple de générer un secret sur 256 bytes :
+Voici un moyen très simple de générer un secret sur 256 bytes :
 
 ```
 console.log(
