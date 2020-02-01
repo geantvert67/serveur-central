@@ -16,6 +16,6 @@ module.exports = [
     {
         url: '/whoami',
         method: 'get',
-        func: [auth_ctrl.is_authenticated, auth_ctrl.whoami]
+        func: auth_ctrl.whoami
     }
 ];
