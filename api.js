@@ -4,12 +4,15 @@ const PORT = process.env.PORT;
 const express = require('express'),
     app = express(),
     cors = require('cors'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    auth_ctrl = require('./controllers/auth_ctrl');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
+
+app.use(/^(?!\/(signin|signup)).*$/, auth_ctrl.is_authenticated);
 
 require('./routes')(app);
 
