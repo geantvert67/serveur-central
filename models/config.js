@@ -17,7 +17,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             sequelize,
-            modelName: 'Config'
+            modelName: 'Config',
+            scopes: {
+                public: {
+                    where: {
+                        isPrivate: false
+                    }
+                }
+            }
         }
     );
 
