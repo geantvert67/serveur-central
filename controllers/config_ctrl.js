@@ -15,5 +15,12 @@ module.exports = {
             })
             .then(configs => res.json(configs))
             .catch(err => next(err));
+    },
+
+    getByOwner: (req, res, next) => {
+        return req.user
+            .getConfigs({ attributes: { exclude: ['OwnerId'] } })
+            .then(configs => res.json(configs))
+            .catch(err => next(err));
     }
 };

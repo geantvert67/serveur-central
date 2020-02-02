@@ -5,5 +5,11 @@ module.exports = [
         url: '/configs',
         method: 'get',
         func: config_ctrl.getAll
+    },
+
+    {
+        url: '/user/configs',
+        method: 'get',
+        func: config_ctrl.getByOwner
     }
 ];
