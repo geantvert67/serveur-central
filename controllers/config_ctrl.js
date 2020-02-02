@@ -17,6 +17,19 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    create: (req, res, next) => {
+        const name = req.body.name,
+            isPrivate = req.body.isPrivate;
+
+        if (name) {
+            return req.user
+                .createConfig({ name, isPrivate })
+                .then(config => res.json(config))
+                .catch(err => next(err));
+        }
+        throw { status: 406, message: 'Paramètres invalides' };
+    },
+
     getByOwner: (req, res, next) => {
         return req.user
             .getConfigs({ attributes: { exclude: ['OwnerId'] } })

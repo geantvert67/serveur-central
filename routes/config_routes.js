@@ -8,6 +8,12 @@ module.exports = [
     },
 
     {
+        url: '/configs',
+        method: 'post',
+        func: config_ctrl.create
+    },
+
+    {
         url: '/user/configs',
         method: 'get',
         func: config_ctrl.getByOwner
