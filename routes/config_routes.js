@@ -14,6 +14,12 @@ module.exports = [
     },
 
     {
+        url: '/configs/:config_id',
+        method: 'get',
+        func: config_ctrl.getById
+    },
+
+    {
         url: '/user/configs',
         method: 'get',
         func: config_ctrl.getByOwner

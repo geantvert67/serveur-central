@@ -36,6 +36,18 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
+    getById: (req, res, next) => {
+        return db.Config.findByPk(req.params.config_id)
+            .then(config => {
+                if (config) return res.json(config);
+                throw {
+                    status: 404,
+                    message: 'Aucune configuration ne possède cet identifiant'
+                };
+            })
+            .catch(err => next(err));
+    },
+
     getByOwner: (req, res, next) => {
         return req.user
             .getConfigs(basicDetails)
