@@ -1,5 +1,8 @@
 const db = require('../models');
-const { basicDetails, ownerUsername } = require('../serializers/config');
+const {
+    basicDetails,
+    ownerUsername
+} = require('../serializers/config_serializer');
 
 module.exports = {
     getAll: (req, res, next) => {
