@@ -37,7 +37,7 @@ module.exports = {
     },
 
     getById: (req, res, next) => {
-        return db.Config.findByPk(req.params.config_id)
+        return db.Config.findByPk(req.params.config_id, ownerUsername)
             .then(config => {
                 if (config) return res.json(config);
                 throw {
