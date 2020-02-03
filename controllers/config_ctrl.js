@@ -1,17 +1,12 @@
 const db = require('../models');
+const { basicDetails, ownerUsername } = require('../serializers/config');
 
 module.exports = {
     getAll: (req, res, next) => {
         return db.Config.scope('public')
             .findAll({
-                attributes: { exclude: ['OwnerId'] },
-                include: [
-                    {
-                        model: db.User,
-                        as: 'Owner',
-                        attributes: ['username']
-                    }
-                ]
+                ...basicDetails,
+                ...ownerUsername
             })
             .then(configs => res.json(configs))
             .catch(err => next(err));
@@ -19,11 +14,22 @@ module.exports = {
 
     create: (req, res, next) => {
         const name = req.body.name,
-            isPrivate = req.body.isPrivate;
+            isPrivate = req.body.isPrivate,
+            maxPlayers = req.body.maxPlayers,
+            gameMode = req.body.gameMode,
+            duration = req.body.duration,
+            inventorySize = req.body.inventorySize;
 
-        if (name) {
+        if (name && gameMode) {
             return req.user
-                .createConfig({ name, isPrivate })
+                .createConfig({
+                    name,
+                    isPrivate,
+                    maxPlayers,
+                    gameMode,
+                    duration,
+                    inventorySize
+                })
                 .then(config => res.json(config))
                 .catch(err => next(err));
         }
@@ -32,7 +38,7 @@ module.exports = {
 
     getByOwner: (req, res, next) => {
         return req.user
-            .getConfigs({ attributes: { exclude: ['OwnerId'] } })
+            .getConfigs(basicDetails)
             .then(configs => res.json(configs))
             .catch(err => next(err));
     }

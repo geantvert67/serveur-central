@@ -13,6 +13,30 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: true
+            },
+            maxPlayers: {
+                type: DataTypes.INTEGER
+            },
+            gameMode: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    isIn: {
+                        args: [['FLAG', 'TIME', 'SUPREMACY']]
+                    }
+                }
+            },
+            duration: {
+                type: DataTypes.INTEGER
+            },
+            inventorySize: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 2,
+                validate: {
+                    min: 1,
+                    max: 10
+                }
             }
         },
         {
