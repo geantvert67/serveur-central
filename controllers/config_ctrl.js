@@ -51,6 +51,23 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    updateById: (req, res, next) => {
+        return db.Config.findByPk(req.params.config_id, ownerUsername)
+            .then(config => {
+                if (config) {
+                    return config
+                        .update(req.body)
+                        .then(() => res.json(config))
+                        .catch(err => next(err));
+                }
+                throw {
+                    status: 404,
+                    message: 'Aucune configuration ne possède cet identifiant'
+                };
+            })
+            .catch(err => next(err));
+    },
+
     getByOwner: (req, res, next) => {
         return req.user
             .getConfigs(basicDetails)
