@@ -15,6 +15,12 @@ module.exports = [
 
     {
         url: '/configs/:config_id',
+        method: 'use',
+        func: config_ctrl.loadById
+    },
+
+    {
+        url: '/configs/:config_id',
         method: 'get',
         func: config_ctrl.getById
     },

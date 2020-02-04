@@ -39,10 +39,13 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
-    getById: (req, res, next) => {
+    loadById: (req, res, next) => {
         return db.Config.findByPk(req.params.config_id, ownerUsername)
             .then(config => {
-                if (config) return res.json(config);
+                if (config) {
+                    req.config = config;
+                    return next();
+                }
                 throw {
                     status: 404,
                     message: 'Aucune configuration ne possède cet identifiant'
@@ -51,20 +54,14 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    getById: (req, res, next) => {
+        return res.json(req.config);
+    },
+
     updateById: (req, res, next) => {
-        return db.Config.findByPk(req.params.config_id, ownerUsername)
-            .then(config => {
-                if (config) {
-                    return config
-                        .update(req.body)
-                        .then(() => res.json(config))
-                        .catch(err => next(err));
-                }
-                throw {
-                    status: 404,
-                    message: 'Aucune configuration ne possède cet identifiant'
-                };
-            })
+        return req.config
+            .update(req.body)
+            .then(() => res.json(req.config))
             .catch(err => next(err));
     },
 
