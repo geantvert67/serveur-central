@@ -61,7 +61,7 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
-    is_authenticated: [
+    isAuthenticated: [
         expressjwt({ secret }),
         (req, res, next) => {
             db.User.findByPk(req.user.id)
