@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors());
 
+app.set('json replacer', (k, v) => (v === null ? undefined : v));
+
 app.use(/^(?!\/(signin|signup)).*$/, auth_ctrl.is_authenticated);
 
 require('./routes')(app);
