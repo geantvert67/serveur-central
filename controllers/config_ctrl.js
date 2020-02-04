@@ -16,23 +16,9 @@ module.exports = {
     },
 
     create: (req, res, next) => {
-        const name = req.body.name,
-            isPrivate = req.body.isPrivate,
-            maxPlayers = req.body.maxPlayers,
-            gameMode = req.body.gameMode,
-            duration = req.body.duration,
-            inventorySize = req.body.inventorySize;
-
-        if (name && gameMode) {
+        if (req.body.name && req.body.gameMode) {
             return req.user
-                .createConfig({
-                    name,
-                    isPrivate,
-                    maxPlayers,
-                    gameMode,
-                    duration,
-                    inventorySize
-                })
+                .createConfig(req.body)
                 .then(config => res.json(config))
                 .catch(err => next(err));
         }
