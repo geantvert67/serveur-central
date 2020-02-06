@@ -13,6 +13,50 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: true
+            },
+            maxPlayers: {
+                type: DataTypes.INTEGER,
+                validate: {
+                    min: 1,
+                    max: 100
+                }
+            },
+            gameMode: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    isIn: {
+                        args: [['FLAG', 'TIME', 'SUPREMACY']]
+                    },
+                    checkDuration(value) {
+                        if (value === 'SUPREMACY' && this.duration) {
+                            throw new Error("Ce mode de jeu n'a pas de durée");
+                        } else if (
+                            (value === 'FLAG' || value === 'TIME') &&
+                            !this.duration
+                        ) {
+                            throw new Error(
+                                'Ce mode de jeu doit avoir une durée'
+                            );
+                        }
+                    }
+                }
+            },
+            duration: {
+                type: DataTypes.INTEGER,
+                validate: {
+                    min: 60,
+                    max: 31536000
+                }
+            },
+            inventorySize: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                defaultValue: 2,
+                validate: {
+                    min: 1,
+                    max: 10
+                }
             }
         },
         {
