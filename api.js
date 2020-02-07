@@ -29,3 +29,5 @@ const errorHandler = (err, req, res, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`API lancée sur le port ${PORT}`));
+
+module.exports = app;
