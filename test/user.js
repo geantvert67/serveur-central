@@ -1,20 +1,21 @@
 const chai = require('chai'),
     chaiHTTP = require('chai-http'),
     should = chai.should(),
-    app = require('../api');
+    app = require('../api'),
+    jwt = require('jsonwebtoken'),
+    db = require('../models'),
+    secret = process.env.SECRET;
 
 chai.use(chaiHTTP);
 let token = '';
 
 describe('Utilisateur', () => {
-    before(done => {
-        chai.request(app)
-            .post('/signin')
-            .send({ username: 'clement', password: 'clement' })
-            .end((err, res) => {
-                token = res.body.token;
-                done();
+    before(() => {
+        return db.User.findOne({ where: { username: 'clement' } }).then(u => {
+            token = jwt.sign({ id: u.id }, secret, {
+                expiresIn: '1m'
             });
+        });
     });
 
     describe('Récupérer son profil', () => {
