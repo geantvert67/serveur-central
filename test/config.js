@@ -156,4 +156,21 @@ describe('Configuration', () => {
             });
         });
     });
+
+    describe('Suppression', () => {
+        it('Avec succès', done => {
+            db.Config.findOne({
+                name: 'configuration publique 2'
+            }).then(config => {
+                chai.request(app)
+                    .delete(`/configs/${config.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('message');
+                        done();
+                    });
+            });
+        });
+    });
 });

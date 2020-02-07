@@ -51,6 +51,13 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    deleteById: (req, res, next) => {
+        return req.config
+            .destroy()
+            .then(() => res.json({ message: 'Configuration supprimée' }))
+            .catch(err => next(err));
+    },
+
     getByOwner: (req, res, next) => {
         return req.user
             .getConfigs(basicDetails)

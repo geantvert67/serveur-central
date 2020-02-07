@@ -32,6 +32,12 @@ module.exports = [
     },
 
     {
+        url: '/configs/:config_id',
+        method: 'delete',
+        func: config_ctrl.deleteById
+    },
+
+    {
         url: '/user/configs',
         method: 'get',
         func: config_ctrl.getByOwner
