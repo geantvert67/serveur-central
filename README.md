@@ -9,6 +9,7 @@
 ```
 PORT=
 DB_HOST=
+TEST_DB_NAME=
 DB_NAME=
 DB_USER=
 DB_PWD=
@@ -27,4 +28,5 @@ console.log(
 
 ### Usage
 
-Lancer en mode développement : `npm run start`
+Lancer en mode développement : `npm run start-dev`
+Lancer les tests : `npm run test`
