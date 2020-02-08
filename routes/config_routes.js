@@ -28,13 +28,13 @@ module.exports = [
     {
         url: '/configs/:config_id',
         method: 'put',
-        func: config_ctrl.updateById
+        func: [config_ctrl.isConfigOwner, config_ctrl.updateById]
     },
 
     {
         url: '/configs/:config_id',
         method: 'delete',
-        func: config_ctrl.deleteById
+        func: [config_ctrl.isConfigOwner, config_ctrl.deleteById]
     },
 
     {
