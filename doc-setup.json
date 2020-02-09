@@ -6,5 +6,5 @@
             "description": "Un jeu multijoueur temps réel et grandeur nature dans lequel plusieurs équipes s’affrontent pour la domination d’un territoire."
         }
     },
-    "apis": ["./models/*.js", "./routes/*.js"]
+    "apis": ["./models/*.js", "./routes/*.js", "./docs/*.yaml"]
 }
