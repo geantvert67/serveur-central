@@ -2,6 +2,25 @@ const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
+    /**
+     * @swagger
+     *  components:
+     *    schemas:
+     *      User:
+     *        type: object
+     *        required:
+     *          - username
+     *          - password
+     *        properties:
+     *          username:
+     *            type: string
+     *            unique: true
+     *            description: Nom d'utilisateur, doit être unique.
+     *          password:
+     *            type: string
+     *            writeOnly: true
+     *            description: Mot de passe.
+     */
     class User extends Model {
         static usernameIsUnique(username) {
             return this.findOne({ where: { username } })
