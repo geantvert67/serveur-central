@@ -28,6 +28,6 @@ console.log(
 
 ### Usage
 
-Lancer en mode développement : `npm run start-dev`
-Lancer les tests : `npm run test`
-Accéder à la documentation : `npm run start-dev` > `http://localhost:8080/docs/` dans un navigateur
+- **Lancer en mode développement :** `npm run start-dev`
+- **Lancer les tests :** `npm run test`
+- **Accéder à la documentation :** `npm run start-dev` > `http://localhost:8080/docs/` dans un navigateur
