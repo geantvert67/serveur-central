@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
      *            type: string
      *            writeOnly: true
      *            description: Mot de passe.
+     *        example:
+     *          username: clement284
+     *          password: azerty123
      */
     class User extends Model {
         static usernameIsUnique(username) {
