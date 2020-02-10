@@ -39,6 +39,13 @@ module.exports = (sequelize, DataTypes) => {
      *            maximum: 10
      *            default: 2
      *            description: Nombre d'objets qu'un joueur pourra avoir dans son inventaire.
+     *        example:
+     *          name: config 1
+     *          isPrivate: false
+     *          gameMode: FLAG
+     *          duration: 600
+     *          inventorySize: 7
+     *          maxPlayers: 10
      */
     class Config extends Model {}
 
