@@ -9,6 +9,8 @@
 ```
 PORT=
 DB_HOST=
+TEST_DB_NAME=
+DB_NAME=
 DB_USER=
 DB_PWD=
 SECRET=
@@ -26,4 +28,6 @@ console.log(
 
 ### Usage
 
-Lancer en mode développement : `npm run start`
+- **Lancer en mode développement :** `npm run start-dev`
+- **Lancer les tests :** `npm run test`
+- **Accéder à la documentation :** `npm run start-dev` > `http://localhost:8080/docs/` dans un navigateur

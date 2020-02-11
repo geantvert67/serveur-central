@@ -1,14 +1,16 @@
 const fs = require('fs'),
-    Sequelize = require('sequelize');
+    Sequelize = require('sequelize'),
+    NODE_ENV = process.env.NODE_ENV;
 
 const sequelize = new Sequelize(
-    'serveur-central',
+    NODE_ENV === 'staging' ? process.env.TEST_DB_NAME : process.env.DB_NAME,
     process.env.DB_USER,
     process.env.DB_PWD,
     {
         host: process.env.DB_HOST,
         port: '3306',
-        dialect: 'mysql'
+        dialect: 'mysql',
+        logging: NODE_ENV === 'development' ? console.log : false
     }
 );
 

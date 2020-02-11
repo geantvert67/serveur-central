@@ -1,0 +1,10 @@
+{
+    "swaggerDefinition": {
+        "openapi": "3.0.0",
+        "info": {
+            "title": "Projet Acrobatt - Munchegress",
+            "description": "Un jeu multijoueur temps réel et grandeur nature dans lequel plusieurs équipes s’affrontent pour la domination d’un territoire."
+        }
+    },
+    "apis": ["./models/*.js", "./routes/*.js", "./docs/**/*.yaml"]
+}

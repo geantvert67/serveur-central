@@ -40,6 +40,21 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    isConfigOwner: (req, res, next) => {
+        req.config
+            .getOwner()
+            .then(owner => {
+                if (owner.id === req.user.id) {
+                    return next();
+                }
+                throw {
+                    status: 401,
+                    message: "Vous n'êtes pas autorisé à effectuer cette action"
+                };
+            })
+            .catch(err => next(err));
+    },
+
     getById: (req, res, next) => {
         return res.json(req.config);
     },
@@ -48,6 +63,13 @@ module.exports = {
         return req.config
             .update(req.body)
             .then(() => res.json(req.config))
+            .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.config
+            .destroy()
+            .then(() => res.json({ message: 'Configuration supprimée' }))
             .catch(err => next(err));
     },
 

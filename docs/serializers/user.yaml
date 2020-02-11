@@ -1,0 +1,26 @@
+components:
+    serializers:
+        UserWithoutPassword:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                username:
+                    type: string
+                    example: clement284
+        UserAndToken:
+            type: object
+            properties:
+                token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTAsImlhdCI6MTU4MTEwNzc4MiwiZXhwIjoxNjEyNjQzNzgyfQ.uomff3RZX_SpjMWi74_J9Ib4bOjY3lO8i_MrNMnno8Q
+                user:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                            example: 1
+                        username:
+                            type: string
+                            example: clement284
