@@ -68,12 +68,10 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
             gameMode: {
-                type: DataTypes.STRING,
+                type: DataTypes.ENUM,
+                values: ['FLAG', 'TIME', 'SUPREMACY'],
                 allowNull: false,
                 validate: {
-                    isIn: {
-                        args: [['FLAG', 'TIME', 'SUPREMACY']]
-                    },
                     checkDuration(value) {
                         if (value === 'SUPREMACY' && this.duration) {
                             throw new Error("Ce mode de jeu n'a pas de durée");
