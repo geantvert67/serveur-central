@@ -25,20 +25,7 @@ module.exports = [
      *          content:
      *            application/json:
      *              schema:
-     *                type: object
-     *                properties:
-     *                  token:
-     *                    type: string
-     *                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTAsImlhdCI6MTU4MTEwNzc4MiwiZXhwIjoxNjEyNjQzNzgyfQ.uomff3RZX_SpjMWi74_J9Ib4bOjY3lO8i_MrNMnno8Q
-     *                  user:
-     *                    type: object
-     *                    properties:
-     *                      id:
-     *                        type: integer
-     *                        example: 1
-     *                      username:
-     *                        type: string
-     *                        example: clement284
+     *                $ref: '#/components/serializers/UserAndToken'
      *        "406":
      *          description: Paramètres invalides
      *        "409":
@@ -69,20 +56,7 @@ module.exports = [
      *          content:
      *            application/json:
      *              schema:
-     *                type: object
-     *                properties:
-     *                  token:
-     *                    type: string
-     *                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTAsImlhdCI6MTU4MTEwNzc4MiwiZXhwIjoxNjEyNjQzNzgyfQ.uomff3RZX_SpjMWi74_J9Ib4bOjY3lO8i_MrNMnno8Q
-     *                  user:
-     *                    type: object
-     *                    properties:
-     *                      id:
-     *                        type: integer
-     *                        example: 1
-     *                      username:
-     *                        type: string
-     *                        example: clement284
+     *                $ref: '#/components/serializers/UserAndToken'
      *        "401":
      *          description: Identifiants invalides
      *        "406":

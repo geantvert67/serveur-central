@@ -21,14 +21,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 type: object
-     *                 properties:
-     *                    id:
-     *                      type: integer
-     *                      example: 1
-     *                    username:
-     *                      type: string
-     *                      example: clement284
+     *                 $ref: '#/components/serializers/UserWithoutPassword'
      */
     {
         url: '/user',

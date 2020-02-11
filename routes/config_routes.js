@@ -21,30 +21,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 type: object
-     *                 properties:
-     *                    id:
-     *                      type: integer
-     *                      example: 1
-     *                    name:
-     *                      type: string
-     *                      example: config 1
-     *                    gameMode:
-     *                      type: string
-     *                      example: SUPREMACY
-     *                    isPrivate:
-     *                      type: boolean
-     *                      example: false
-     *                    createdAt:
-     *                      type: string
-     *                      format: date-time
-     *                      example: 2020-02-10T17:04:24.000Z
-     *                    Owner:
-     *                      type: object
-     *                      properties:
-     *                        username:
-     *                          type: string
-     *                          example: clement284
+     *                 $ref: '#/components/serializers/BasicConfig'
      */
     {
         url: '/configs',
@@ -73,36 +50,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 type: object
-     *                 properties:
-     *                   id:
-     *                     type: integer
-     *                     example: 1
-     *                   name:
-     *                     type: string
-     *                     example: config 1
-     *                   isPrivate:
-     *                     type: boolean
-     *                     example: false
-     *                   maxPlayers:
-     *                     type: integer
-     *                     example: 10
-     *                   gameMode:
-     *                     type: string
-     *                     example: FLAG
-     *                   duration:
-     *                     type: integer
-     *                     example: 600
-     *                   inventorySize:
-     *                     type: integer
-     *                     example: 7
-     *                   createdAt:
-     *                      type: string
-     *                      format: date-time
-     *                      example: 2020-02-10T17:04:24.000Z
-     *                   OwnerId:
-     *                     type: integer
-     *                     example: 1
+     *                 $ref: '#/components/serializers/CreatedConfig'
      *         "406":
      *           description: Paramètres invalides
      */
@@ -141,42 +89,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 type: object
-     *                 properties:
-     *                   id:
-     *                     type: integer
-     *                     example: 1
-     *                   name:
-     *                     type: string
-     *                     example: config 1
-     *                   isPrivate:
-     *                     type: boolean
-     *                     example: false
-     *                   maxPlayers:
-     *                     type: integer
-     *                     example: 10
-     *                   gameMode:
-     *                     type: string
-     *                     example: FLAG
-     *                   duration:
-     *                     type: integer
-     *                     example: 600
-     *                   inventorySize:
-     *                     type: integer
-     *                     example: 7
-     *                   createdAt:
-     *                      type: string
-     *                      format: date-time
-     *                      example: 2020-02-10T17:04:24.000Z
-     *                   OwnerId:
-     *                     type: integer
-     *                     example: 1
-     *                   Owner:
-     *                     type: object
-     *                     properties:
-     *                       username:
-     *                         type: string
-     *                         example: clement284
+     *                 $ref: '#/components/serializers/DetailedConfig'
      *         "404":
      *           description: Configuration inexistante
      */
@@ -215,42 +128,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 type: object
-     *                 properties:
-     *                   id:
-     *                     type: integer
-     *                     example: 1
-     *                   name:
-     *                     type: string
-     *                     example: config 1
-     *                   isPrivate:
-     *                     type: boolean
-     *                     example: false
-     *                   maxPlayers:
-     *                     type: integer
-     *                     example: 10
-     *                   gameMode:
-     *                     type: string
-     *                     example: FLAG
-     *                   duration:
-     *                     type: integer
-     *                     example: 600
-     *                   inventorySize:
-     *                     type: integer
-     *                     example: 7
-     *                   createdAt:
-     *                      type: string
-     *                      format: date-time
-     *                      example: 2020-02-10T17:04:24.000Z
-     *                   OwnerId:
-     *                     type: integer
-     *                     example: 1
-     *                   Owner:
-     *                     type: object
-     *                     properties:
-     *                       username:
-     *                         type: string
-     *                         example: clement284
+     *                 $ref: '#/components/serializers/DetailedConfig'
      *         "404":
      *           description: Configuration inexistante
      */
@@ -312,24 +190,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 type: object
-     *                 properties:
-     *                    id:
-     *                      type: integer
-     *                      example: 1
-     *                    name:
-     *                      type: string
-     *                      example: config 1
-     *                    gameMode:
-     *                      type: string
-     *                      example: SUPREMACY
-     *                    isPrivate:
-     *                      type: boolean
-     *                      example: false
-     *                    createdAt:
-     *                      type: string
-     *                      format: date-time
-     *                      example: 2020-02-10T17:04:24.000Z
+     *                 $ref: '#/components/serializers/BasicConfig'
      */
     {
         url: '/user/configs',
