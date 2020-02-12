@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      *        properties:
      *          name:
      *            type: string
+     *            minLength: 2
+     *            maxLength: 50
      *            description: Nom de la configuration.
      *          isPrivate:
      *            type: boolean
@@ -47,13 +49,17 @@ module.exports = (sequelize, DataTypes) => {
      *          inventorySize: 7
      *          maxPlayers: 10
      */
-    class Config extends Model {}
+    class Config extends Model { }
 
     Config.init(
         {
             name: {
                 type: DataTypes.STRING,
-                allowNull: false
+                allowNull: false,
+                validate: {
+                    min: 2,
+                    max: 50
+                }
             },
             isPrivate: {
                 type: DataTypes.BOOLEAN,
