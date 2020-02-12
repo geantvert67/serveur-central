@@ -135,5 +135,49 @@ module.exports = [
         url: '/configs/:config_id/teams/:team_id',
         method: 'put',
         func: team_ctrl.updateById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/teams/{team_id}:
+     *     delete:
+     *       summary: Supprimer une équipe
+     *       tags: [Team]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: team_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'équipe
+     *       responses:
+     *         "200":
+     *           description: Équipe supprimée
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Équipe supprimée
+     *         "404":
+     *           description: Équipe inexistante
+     */
+    {
+        url: '/configs/:config_id/teams/:team_id',
+        method: 'delete',
+        func: team_ctrl.deleteById
     }
 ];

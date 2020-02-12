@@ -95,4 +95,19 @@ describe('Équipe', () => {
             });
         });
     });
+
+    describe('Suppresion', () => {
+        it('Valide', done => {
+            db.Team.findOne({ name: 'équipe 2' }).then(team => {
+                chai.request(app)
+                    .delete(`/configs/${configId}/teams/${team.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('message');
+                        done();
+                    });
+            });
+        });
+    });
 });

@@ -38,5 +38,12 @@ module.exports = {
             .update(req.body)
             .then(team => res.json(team))
             .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.team
+            .destroy()
+            .then(() => res.json({ message: 'Équipe supprimée' }))
+            .catch(err => next(err));
     }
 };
