@@ -124,6 +124,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Config.associate = db => {
         Config.belongsTo(db.User, { as: 'Owner' });
+        Config.hasMany(db.Team);
     };
 
     return Config;
