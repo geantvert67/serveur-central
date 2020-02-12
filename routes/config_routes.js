@@ -96,7 +96,7 @@ module.exports = [
     {
         url: '/configs/:config_id',
         method: 'get',
-        func: config_ctrl.getById
+        func: [config_ctrl.configIsPublicOrIsConfigOwner, config_ctrl.getById]
     },
 
     /**

@@ -4,7 +4,7 @@ const {
     ownerUsername
 } = require('../serializers/config_serializer');
 
-module.exports = {
+const _this = module.exports = {
     getAll: (req, res, next) => {
         return db.Config.scope('public')
             .findAll({
@@ -40,8 +40,15 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    configIsPublicOrIsConfigOwner: (req, res, next) => {
+        if (req.config.isPrivate) {
+            return _this.isConfigOwner(req, res, next);
+        }
+        return next();
+    },
+
     isConfigOwner: (req, res, next) => {
-        req.config
+        return req.config
             .getOwner()
             .then(owner => {
                 if (owner.id === req.user.id) {
