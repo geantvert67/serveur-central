@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
     process.env.DB_PWD,
     {
         host: process.env.DB_HOST,
-        port: '8889',
+        port: process.env.DB_PORT,
         dialect: 'mysql',
         logging: NODE_ENV === 'development' ? console.log : false
     }
@@ -35,7 +35,7 @@ fs.readdirSync(__dirname)
 Object.keys(db).forEach(modelName => {
     try {
         db[modelName].associate(db);
-    } catch (e) { }
+    } catch (e) {}
 });
 
 sequelize.sync({ alter: true });
