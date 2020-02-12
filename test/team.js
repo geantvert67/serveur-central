@@ -21,12 +21,14 @@ describe('Équipe', () => {
                     expiresIn: '1m'
                 });
             }),
-            db.Config.findOne({ where: { name: 'configuration publique' } }).then(c => {
+            db.Config.findOne({
+                where: { name: 'configuration publique' }
+            }).then(c => {
                 configId = c.id;
             }),
             db.Team.destroy({ truncate: { cascade: true } })
         ]);
-    })
+    });
 
     describe('Création', () => {
         it('Valide', done => {
@@ -75,6 +77,22 @@ describe('Équipe', () => {
                     res.body.length.should.be.equal(1);
                     done();
                 });
-        })
+        });
+    });
+
+    describe('Modification', () => {
+        it('Valide', done => {
+            db.Team.findOne({ name: 'équipe 1' }).then(team => {
+                chai.request(app)
+                    .put(`/configs/${configId}/teams/${team.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .send({ name: 'équipe 2' })
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.name.should.be.equal('équipe 2');
+                        done();
+                    });
+            });
+        });
     });
 });

@@ -37,7 +37,7 @@ module.exports = [
      *              application/json:
      *                schema:
      *                  type: array
-     *                  items: 
+     *                  items:
      *                    $ref: '#/components/schemas/Team'
      */
     {
@@ -75,7 +75,7 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 $ref: '#/components/schemas/Team'
+     *                 $ref: '#/components/serializers/CreatedTeam'
      *         "406":
      *           description: Paramètres invalides
      */
@@ -83,5 +83,57 @@ module.exports = [
         url: '/configs/:config_id/teams',
         method: 'post',
         func: team_ctrl.create
+    },
+
+    {
+        url: '/configs/:config_id/teams/:team_id',
+        method: 'use',
+        func: team_ctrl.loadById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/teams/{team_id}:
+     *     put:
+     *       summary: Modifier une équipe
+     *       tags: [Team]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: team_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'équipe
+     *       requestBody:
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              $ref: '#/components/schemas/Team'
+     *       responses:
+     *         "200":
+     *           description: Équipe modifiée
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 $ref: '#/components/serializers/CreatedTeam'
+     *         "404":
+     *           description: Équipe inexistante
+     */
+    {
+        url: '/configs/:config_id/teams/:team_id',
+        method: 'put',
+        func: team_ctrl.updateById
     }
-]
+];
