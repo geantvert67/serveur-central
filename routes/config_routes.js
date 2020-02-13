@@ -21,7 +21,9 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 $ref: '#/components/serializers/BasicConfig'
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/serializers/BasicConfig'
      */
     {
         url: '/configs',
@@ -58,12 +60,6 @@ module.exports = [
         url: '/configs',
         method: 'post',
         func: config_ctrl.create
-    },
-
-    {
-        url: '/configs/:config_id',
-        method: 'use',
-        func: config_ctrl.loadById
     },
 
     /**
