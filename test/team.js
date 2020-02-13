@@ -96,7 +96,7 @@ describe('Équipe', () => {
         });
     });
 
-    describe('Suppresion', () => {
+    describe('Suppression', () => {
         it('Valide', done => {
             db.Team.findOne({ name: 'équipe 2' }).then(team => {
                 chai.request(app)
