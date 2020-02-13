@@ -146,5 +146,49 @@ module.exports = [
         url: '/configs/:config_id/areas/:area_id',
         method: 'put',
         func: area_ctrl.updateById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/areas/{area_id}:
+     *     delete:
+     *       summary: Supprimer une zone
+     *       tags: [Area]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: area_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la zone
+     *       responses:
+     *         "200":
+     *           description: Zone supprimée
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Zone supprimée
+     *         "404":
+     *           description: Zone inexistante
+     */
+    {
+        url: '/configs/:config_id/areas/:area_id',
+        method: 'delete',
+        func: area_ctrl.deleteById
     }
 ];

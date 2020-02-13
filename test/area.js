@@ -130,4 +130,19 @@ describe('Zone', () => {
             });
         });
     });
+
+    describe('Suppression', () => {
+        it('Valide', done => {
+            db.Area.findOne({ where: { ConfigId: configId } }).then(area => {
+                chai.request(app)
+                    .delete(`/configs/${configId}/areas/${area.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('message');
+                        done();
+                    });
+            });
+        });
+    });
 });

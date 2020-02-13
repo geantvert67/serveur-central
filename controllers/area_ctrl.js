@@ -69,5 +69,12 @@ module.exports = {
             })
             .then(area => res.json(area))
             .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.area
+            .destroy()
+            .then(() => res.json({ message: 'Zone supprimée' }))
+            .catch(err => next(err));
     }
 };
