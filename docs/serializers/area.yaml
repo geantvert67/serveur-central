@@ -1,0 +1,27 @@
+components:
+    serializers:
+        Area:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                position:
+                    type: object
+                    example:
+                        {
+                            type: 'Polygon',
+                            coordinates:
+                                [
+                                    [
+                                        [100, 0],
+                                        [101, 0],
+                                        [101, 1],
+                                        [100, 1],
+                                        [100, 0],
+                                    ],
+                                ],
+                        }
+                forbidden:
+                    type: boolean
+                    example: false
