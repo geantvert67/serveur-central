@@ -77,13 +77,11 @@ module.exports = [
      *                  example: false
      *       responses:
      *         "200":
-     *            description: Zones créée
+     *            description: Zone créée
      *            content:
      *              application/json:
      *                schema:
-     *                  type: array
-     *                  items:
-     *                    $ref: '#/components/serializers/Area'
+     *                  $ref: '#/components/serializers/Area'
      *         "406":
      *           description: Paramètres invalides
      */

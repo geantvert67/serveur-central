@@ -186,7 +186,9 @@ module.exports = [
      *           content:
      *             application/json:
      *               schema:
-     *                 $ref: '#/components/serializers/BasicConfig'
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/serializers/BasicConfig'
      */
     {
         url: '/user/configs',
