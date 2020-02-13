@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
      *          inventorySize: 7
      *          maxPlayers: 10
      */
-    class Config extends Model { }
+    class Config extends Model {}
 
     Config.init(
         {
@@ -124,7 +124,8 @@ module.exports = (sequelize, DataTypes) => {
 
     Config.associate = db => {
         Config.belongsTo(db.User, { as: 'Owner' });
-        Config.hasMany(db.Team);
+        Config.hasMany(db.Team, { onDelete: 'CASCADE' });
+        Config.hasMany(db.Area, { onDelete: 'CASCADE' });
     };
 
     return Config;
