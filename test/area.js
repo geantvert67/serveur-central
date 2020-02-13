@@ -10,7 +10,7 @@ chai.use(chaiHTTP);
 let token = '';
 let configId = 0;
 
-describe('Équipe', () => {
+describe('Zone', () => {
     before(() => {
         let user = null;
 
@@ -26,16 +26,25 @@ describe('Équipe', () => {
             }).then(c => {
                 configId = c.id;
             }),
-            db.Team.destroy({ truncate: { cascade: true } })
+            db.Area.destroy({ truncate: { cascade: true } })
         ]);
     });
 
     describe('Création', () => {
-        it('Valide', done => {
+        it('Zone de jeu valide', done => {
             chai.request(app)
-                .post(`/configs/${configId}/teams`)
+                .post(`/configs/${configId}/areas`)
                 .set('Authorization', `Bearer ${token}`)
-                .send({ name: 'équipe 1', color: '#e1e1e1' })
+                .send({
+                    forbidden: false,
+                    coordinates: [
+                        [100.0, 0.0],
+                        [101.0, 0.0],
+                        [101.0, 1.0],
+                        [100.0, 1.0],
+                        [100.0, 0.0]
+                    ]
+                })
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -43,38 +52,57 @@ describe('Équipe', () => {
                 });
         });
 
-        it("Nom d'équipe déjà pris", done => {
+        it('Deuxième zone de jeu', done => {
             chai.request(app)
-                .post(`/configs/${configId}/teams`)
+                .post(`/configs/${configId}/areas`)
                 .set('Authorization', `Bearer ${token}`)
-                .send({ name: 'équipe 1', color: '#fff' })
+                .send({
+                    forbidden: false,
+                    coordinates: [
+                        [100.0, 0.0],
+                        [101.0, 0.0],
+                        [101.0, 1.0],
+                        [100.0, 1.0],
+                        [100.0, 0.0]
+                    ]
+                })
                 .end((err, res) => {
-                    res.should.have.status(500);
+                    res.should.have.status(409);
                     done();
                 });
         });
 
-        it('Couleur déjà prise', done => {
+        it('Zone interdite valide', done => {
             chai.request(app)
-                .post(`/configs/${configId}/teams`)
+                .post(`/configs/${configId}/areas`)
                 .set('Authorization', `Bearer ${token}`)
-                .send({ name: 'équipe 2', color: '#e1e1e1' })
+                .send({
+                    forbidden: true,
+                    coordinates: [
+                        [100.0, 0.0],
+                        [101.0, 0.0],
+                        [101.0, 1.0],
+                        [100.0, 1.0],
+                        [100.0, 0.0]
+                    ]
+                })
                 .end((err, res) => {
-                    res.should.have.status(500);
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
                     done();
                 });
         });
     });
 
-    describe("Récupération des équipes d'une configuration", () => {
+    describe("Récupération des zones d'une configuration", () => {
         it('Valide', done => {
             chai.request(app)
-                .get(`/configs/${configId}/teams`)
+                .get(`/configs/${configId}/areas`)
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.equal(1);
+                    res.body.length.should.be.equal(2);
                     done();
                 });
         });
@@ -82,14 +110,21 @@ describe('Équipe', () => {
 
     describe('Modification', () => {
         it('Valide', done => {
-            db.Team.findOne({ name: 'équipe 1' }).then(team => {
+            db.Area.findOne({ where: { ConfigId: configId } }).then(area => {
                 chai.request(app)
-                    .put(`/configs/${configId}/teams/${team.id}`)
+                    .put(`/configs/${configId}/areas/${area.id}`)
                     .set('Authorization', `Bearer ${token}`)
-                    .send({ name: 'équipe 2' })
+                    .send({
+                        coordinates: [
+                            [100.0, 0.0],
+                            [102.0, 0.0],
+                            [101.0, 1.0],
+                            [100.0, 1.0],
+                            [100.0, 0.0]
+                        ]
+                    })
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.name.should.be.equal('équipe 2');
                         done();
                     });
             });
@@ -98,9 +133,9 @@ describe('Équipe', () => {
 
     describe('Suppression', () => {
         it('Valide', done => {
-            db.Team.findOne({ name: 'équipe 2' }).then(team => {
+            db.Area.findOne({ where: { ConfigId: configId } }).then(area => {
                 chai.request(app)
-                    .delete(`/configs/${configId}/teams/${team.id}`)
+                    .delete(`/configs/${configId}/areas/${area.id}`)
                     .set('Authorization', `Bearer ${token}`)
                     .end((err, res) => {
                         res.should.have.status(200);

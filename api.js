@@ -8,7 +8,8 @@ const express = require('express'),
     swaggerJsdoc = require('swagger-jsdoc'),
     swaggerUi = require('swagger-ui-express'),
     docSetup = require('./doc-setup.json'),
-    auth_ctrl = require('./controllers/auth_ctrl');
+    auth_ctrl = require('./controllers/auth_ctrl'),
+    config_ctrl = require('./controllers/config_ctrl');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,6 +19,8 @@ app.use(cors());
 app.set('json replacer', (k, v) => (v === null ? undefined : v));
 
 app.use(/^(?!\/(signin|signup|docs)).*$/, auth_ctrl.isAuthenticated);
+
+app.use('/configs/:config_id', config_ctrl.loadById);
 
 require('./routes')(app);
 

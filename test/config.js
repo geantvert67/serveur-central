@@ -14,7 +14,7 @@ describe('Configuration', () => {
         let user = null;
 
         return Promise.all([
-            db.User.findOne({ where: { username: 'clement' } }).then(u => {
+            db.User.findOne({ where: { username: 'thomas' } }).then(u => {
                 user = u;
                 token = jwt.sign({ id: u.id }, secret, {
                     expiresIn: '1m'
