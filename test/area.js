@@ -107,4 +107,27 @@ describe('Zone', () => {
                 });
         });
     });
+
+    describe('Modification', () => {
+        it('Valide', done => {
+            db.Area.findOne({ where: { ConfigId: configId } }).then(area => {
+                chai.request(app)
+                    .put(`/configs/${configId}/areas/${area.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .send({
+                        coordinates: [
+                            [100.0, 0.0],
+                            [102.0, 0.0],
+                            [101.0, 1.0],
+                            [100.0, 1.0],
+                            [100.0, 0.0]
+                        ]
+                    })
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        done();
+                    });
+            });
+        });
+    });
 });

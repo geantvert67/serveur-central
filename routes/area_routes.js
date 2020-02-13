@@ -91,5 +91,60 @@ module.exports = [
         url: '/configs/:config_id/areas',
         method: 'post',
         func: area_ctrl.create
+    },
+
+    {
+        url: '/configs/:config_id/areas/:area_id',
+        method: 'use',
+        func: area_ctrl.loadById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/areas/{area_id}:
+     *     put:
+     *       summary: Modifier les coordonées d'une zone
+     *       tags: [Area]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: area_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la zone
+     *       requestBody:
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              properties:
+     *                coordinates:
+     *                  type: array
+     *                  example: [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+     *       responses:
+     *         "200":
+     *           description: Zone modifiée
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 $ref: '#/components/serializers/Area'
+     *         "404":
+     *           description: Zone inexistante
+     */
+    {
+        url: '/configs/:config_id/areas/:area_id',
+        method: 'put',
+        func: area_ctrl.updateById
     }
 ];
