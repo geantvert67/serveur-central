@@ -126,6 +126,7 @@ module.exports = (sequelize, DataTypes) => {
         Config.belongsTo(db.User, { as: 'Owner' });
         Config.hasMany(db.Team, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.Area, { onDelete: 'CASCADE', hooks: true });
+        Config.hasMany(db.Flag, { onDelete: 'CASCADE', hooks: true });
     };
 
     return Config;
