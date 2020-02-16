@@ -1,0 +1,23 @@
+components:
+    serializers:
+        Flag:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                visibilityRadius:
+                    type: number
+                    format: decimal
+                    example: 1.5
+                actionRadius:
+                    type: number
+                    format: decimal
+                    example: 1.25
+                captureDuration:
+                    type: integer
+                    example: 60
+                position:
+                    type: object
+                    example:
+                        { type: 'Point', coordinates: [39.807222, -76.984722] }
