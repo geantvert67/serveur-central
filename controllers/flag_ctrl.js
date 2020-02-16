@@ -31,5 +31,27 @@ module.exports = {
                 .catch(err => next(err));
         }
         throw { status: 406, message: 'Paramètres invalides' };
+    },
+
+    loadById: (req, res, next) => {
+        return db.Flag.findByPk(req.params.flag_id)
+            .then(flag => {
+                if (flag) {
+                    req.flag = flag;
+                    return next();
+                }
+                throw {
+                    status: 404,
+                    message: 'Aucun drapeau ne possède cet identifiant'
+                };
+            })
+            .catch(err => next(err));
+    },
+
+    updateById: (req, res, next) => {
+        return req.flag
+            .update(req.body)
+            .then(res.json(req.flag))
+            .catch(err => next(err));
     }
 };

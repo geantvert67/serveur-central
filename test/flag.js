@@ -88,4 +88,21 @@ describe('Drapeau', () => {
                 });
         });
     });
+
+    describe('Modification', () => {
+        it('Valide', done => {
+            db.Flag.findOne({ where: { ConfigId: configId } }).then(flag => {
+                chai.request(app)
+                    .put(`/configs/${configId}/flags/${flag.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .send({ captureDuration: 600 })
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.captureDuration.should.be.equal(600);
+                        done();
+                    });
+            });
+        });
+    });
 });
