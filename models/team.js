@@ -1,7 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-    class Team extends Model { }
+    class Team extends Model {}
 
     /**
      * @swagger
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
      *           minLength: 2
      *           maxLength: 50
      *           description: Nom de l'équipe, doit être unique dans la configuration.
-     *         color: 
+     *         color:
      *           type: string
      *           pattern: ^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$
      *           description: Couleur de l'équipe, doit être unique dans la configuration.
@@ -59,11 +59,11 @@ module.exports = (sequelize, DataTypes) => {
                 }
             ]
         }
-    )
+    );
 
     Team.associate = db => {
         Team.belongsTo(db.Config);
-    }
+    };
 
     return Team;
-}
+};

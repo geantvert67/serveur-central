@@ -29,7 +29,13 @@ describe('Configuration', () => {
             chai.request(app)
                 .post('/configs')
                 .set('Authorization', `Bearer ${token}`)
-                .send({ name: 'configuration privée', gameMode: 'SUPREMACY' })
+                .send({
+                    name: 'configuration privée',
+                    gameMode: 'SUPREMACY',
+                    flagVisibilityRadius: 1.5,
+                    flagActionRadius: 1.25,
+                    flagCaptureDuration: 60,
+                })
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.isPrivate.should.be.true;
@@ -44,7 +50,10 @@ describe('Configuration', () => {
                 .send({
                     name: 'configuration publique',
                     isPrivate: false,
-                    gameMode: 'SUPREMACY'
+                    gameMode: 'SUPREMACY',
+                    flagVisibilityRadius: 1.5,
+                    flagActionRadius: 1.25,
+                    flagCaptureDuration: 60,
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -60,7 +69,10 @@ describe('Configuration', () => {
                 .send({
                     name: 'configuration',
                     gameMode: 'SUPREMACY',
-                    duration: 100
+                    duration: 100,
+                    flagVisibilityRadius: 1.5,
+                    flagActionRadius: 1.25,
+                    flagCaptureDuration: 60,
                 })
                 .end((err, res) => {
                     res.should.have.status(500);
@@ -74,7 +86,27 @@ describe('Configuration', () => {
                 .set('Authorization', `Bearer ${token}`)
                 .send({
                     name: 'configuration',
-                    gameMode: 'TIME'
+                    gameMode: 'TIME',
+                    flagVisibilityRadius: 1.5,
+                    flagActionRadius: 1.25,
+                    flagCaptureDuration: 60,
+                })
+                .end((err, res) => {
+                    res.should.have.status(500);
+                    done();
+                });
+        });
+
+        it("Rayon d'action des drapeaux supérieur au rayon de visibilité", done => {
+            chai.request(app)
+                .post('/configs')
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    name: 'configuration privée',
+                    gameMode: 'SUPREMACY',
+                    flagVisibilityRadius: 1.25,
+                    flagActionRadius: 1.5,
+                    flagCaptureDuration: 60,
                 })
                 .end((err, res) => {
                     res.should.have.status(500);

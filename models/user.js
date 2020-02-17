@@ -71,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     User.associate = db => {
-        User.hasMany(db.Config, { onDelete: 'CASCADE', foreignKey: 'OwnerId' });
+        User.hasMany(db.Config, { foreignKey: 'OwnerId' });
     };
 
     return User;

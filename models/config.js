@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      *        required:
      *          - name
      *          - gameMode
+     *          - flagVisibilityRadius
+     *          - flagActionRadius
+     *          - flagCaptureDuration
      *        properties:
      *          name:
      *            type: string
@@ -41,6 +44,21 @@ module.exports = (sequelize, DataTypes) => {
      *            maximum: 10
      *            default: 2
      *            description: Nombre d'objets qu'un joueur pourra avoir dans son inventaire.
+     *          flagVisibilityRadius:
+     *            type: number
+     *            format: decimal
+     *            minimum: 0.01
+     *            description: Rayon de visibilité des drapeaux.
+     *          flagActionRadius:
+     *            type: number
+     *            format: decimal
+     *            minimum: 0.01
+     *            description: Rayon d'action des drapeaux. Doit être inférieur ou égal au rayon de visibilité.
+     *          flagCaptureDuration:
+     *            type: integer
+     *            minimum: 1
+     *            maximum: 31536000
+     *            description: Durée en secondes pendant laquelle un drapeau appartient à une équipe.
      *        example:
      *          name: config 1
      *          isPrivate: false
@@ -48,8 +66,11 @@ module.exports = (sequelize, DataTypes) => {
      *          duration: 600
      *          inventorySize: 7
      *          maxPlayers: 10
+     *          flagVisibilityRadius: 1.5
+     *          flagActionRadius: 1.25
+     *          flagCaptureDuration: 60
      */
-    class Config extends Model {}
+    class Config extends Model { }
 
     Config.init(
         {
@@ -107,7 +128,36 @@ module.exports = (sequelize, DataTypes) => {
                     min: 1,
                     max: 10
                 }
-            }
+            },
+            flagVisibilityRadius: {
+                type: DataTypes.DECIMAL(3, 2),
+                allowNull: false,
+                validate: {
+                    min: 0.01
+                }
+            },
+            flagActionRadius: {
+                type: DataTypes.DECIMAL(3, 2),
+                allowNull: false,
+                validate: {
+                    min: 0.01,
+                    actionGreaterThanVisibility(value) {
+                        if (value > this.flagVisibilityRadius) {
+                            throw new Error(
+                                "Le rayon d'action doit être inférieur ou égal au rayon de visibilité"
+                            );
+                        }
+                    }
+                }
+            },
+            flagCaptureDuration: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                validate: {
+                    min: 1,
+                    max: 31536000
+                }
+            },
         },
         {
             sequelize,
@@ -124,8 +174,9 @@ module.exports = (sequelize, DataTypes) => {
 
     Config.associate = db => {
         Config.belongsTo(db.User, { as: 'Owner' });
-        Config.hasMany(db.Team, { onDelete: 'CASCADE' });
-        Config.hasMany(db.Area, { onDelete: 'CASCADE' });
+        Config.hasMany(db.Team, { onDelete: 'CASCADE', hooks: true });
+        Config.hasMany(db.Area, { onDelete: 'CASCADE', hooks: true });
+        Config.hasMany(db.Flag, { onDelete: 'CASCADE', hooks: true });
     };
 
     return Config;

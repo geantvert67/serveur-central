@@ -31,4 +31,4 @@ console.log(
 
 -   **Lancer en mode développement :** `npm run start-dev`
 -   **Lancer les tests :** `npm run test`
--   **Accéder à la documentation :** `npm run start-dev` > `http://localhost:8080/docs/` dans un navigateur
+-   **Accéder à la documentation :** `npm run start-dev` > `http://localhost:PORT/docs/` dans un navigateur

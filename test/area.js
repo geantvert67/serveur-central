@@ -125,6 +125,7 @@ describe('Zone', () => {
                     })
                     .end((err, res) => {
                         res.should.have.status(200);
+                        res.body.position.coordinates[0][1][0].should.be.equal(102.0)
                         done();
                     });
             });

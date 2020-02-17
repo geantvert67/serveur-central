@@ -1,14 +1,14 @@
-const area_ctrl = require('../controllers/area_ctrl'),
+const flag_ctrl = require('../controllers/flag_ctrl'),
     config_ctrl = require('../controllers/config_ctrl');
 
 /**
  * @swagger
  * tags:
- *   name: Area
+ *  name: Flag
  */
 module.exports = [
     {
-        url: '/configs/:config_id/areas',
+        url: '/configs/:config_id/flags',
         method: 'use',
         func: config_ctrl.isConfigOwner
     },
@@ -16,10 +16,10 @@ module.exports = [
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas:
+     *   /configs/{config_id}/flags:
      *     get:
-     *       summary: Lister toutes les zones d'une configuration
-     *       tags: [Area]
+     *       summary: Lister tous les drapeaux d'une configuration
+     *       tags: [Flag]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -32,27 +32,27 @@ module.exports = [
      *           description: Identifiant de la configuration
      *       responses:
      *         "200":
-     *            description: Zones récupérées
+     *            description: Drapeaux récupérés
      *            content:
      *              application/json:
      *                schema:
      *                  type: array
      *                  items:
-     *                    $ref: '#/components/serializers/Area'
+     *                    $ref: '#/components/serializers/Flag'
      */
     {
-        url: '/configs/:config_id/areas',
+        url: '/configs/:config_id/flags',
         method: 'get',
-        func: area_ctrl.getAll
+        func: flag_ctrl.getAll
     },
 
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas:
+     *   /configs/{config_id}/flags:
      *     post:
-     *       summary: Créer une zone
-     *       tags: [Area]
+     *       summary: Créer un drapeau
+     *       tags: [Flag]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -68,42 +68,42 @@ module.exports = [
      *        content:
      *          application/json:
      *            schema:
+     *              type: object
      *              properties:
      *                coordinates:
      *                  type: array
-     *                  example: [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
-     *                forbidden:
-     *                  type: boolean
-     *                  example: false
+     *                  items:
+     *                    type: number
+     *                    format: decimal
+     *                  example: [39.807222,-76.984722]
      *       responses:
      *         "200":
-     *            description: Zone créée
+     *            description: Drapeau créé
      *            content:
      *              application/json:
      *                schema:
-     *                  $ref: '#/components/serializers/Area'
+     *                  $ref: '#/components/serializers/Flag'
      *         "406":
      *           description: Paramètres invalides
      */
     {
-        url: '/configs/:config_id/areas',
+        url: '/configs/:config_id/flags',
         method: 'post',
-        func: area_ctrl.create
+        func: flag_ctrl.create
     },
 
     {
-        url: '/configs/:config_id/areas/:area_id',
+        url: '/configs/:config_id/flags/:flag_id',
         method: 'use',
-        func: area_ctrl.loadById
+        func: flag_ctrl.loadById
     },
-
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas/{area_id}:
+     *   /configs/{config_id}/flags/{flag_id}:
      *     put:
-     *       summary: Modifier les coordonnées d'une zone
-     *       tags: [Area]
+     *       summary: Modifier les coordonnées d'un drapeau
+     *       tags: [Flag]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -115,12 +115,12 @@ module.exports = [
      *             minimum: 1
      *           description: Identifiant de la configuration
      *         - in: path
-     *           name: area_id
+     *           name: flag_id
      *           required: true
      *           schema:
      *             type: integer
      *             minimum: 1
-     *           description: Identifiant de la zone
+     *           description: Identifiant du drapeau
      *       requestBody:
      *        required: true
      *        content:
@@ -129,30 +129,33 @@ module.exports = [
      *              properties:
      *                coordinates:
      *                  type: array
-     *                  example: [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+     *                  items:
+     *                    type: number
+     *                    format: decimal
+     *                  example: [39.807222,-76.984722]
      *       responses:
      *         "200":
-     *           description: Zone modifiée
+     *           description: Drapeau modifié
      *           content:
      *             application/json:
      *               schema:
-     *                 $ref: '#/components/serializers/Area'
+     *                 $ref: '#/components/serializers/Flag'
      *         "404":
-     *           description: Zone inexistante
+     *           description: Drapeau inexistant
      */
     {
-        url: '/configs/:config_id/areas/:area_id',
+        url: '/configs/:config_id/flags/:flag_id',
         method: 'put',
-        func: area_ctrl.updateById
+        func: flag_ctrl.updateById
     },
 
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas/{area_id}:
+     *   /configs/{config_id}/flags/{flag_id}:
      *     delete:
-     *       summary: Supprimer une zone
-     *       tags: [Area]
+     *       summary: Supprimer un drapeau
+     *       tags: [Flag]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -164,15 +167,15 @@ module.exports = [
      *             minimum: 1
      *           description: Identifiant de la configuration
      *         - in: path
-     *           name: area_id
+     *           name: flag_id
      *           required: true
      *           schema:
      *             type: integer
      *             minimum: 1
-     *           description: Identifiant de la zone
+     *           description: Identifiant du drapeau
      *       responses:
      *         "200":
-     *           description: Zone supprimée
+     *           description: Drapeau supprimé
      *           content:
      *             application/json:
      *               schema:
@@ -180,13 +183,13 @@ module.exports = [
      *                 properties:
      *                   message:
      *                     type: string
-     *                     example: Zone supprimée
+     *                     example: Drapeau supprimé
      *         "404":
      *           description: Zone inexistante
      */
     {
-        url: '/configs/:config_id/areas/:area_id',
+        url: '/configs/:config_id/flags/:flag_id',
         method: 'delete',
-        func: area_ctrl.deleteById
+        func: flag_ctrl.deleteById
     }
 ];

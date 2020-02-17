@@ -1,0 +1,9 @@
+components:
+    serializers:
+        Flag:
+            type: object
+            properties:
+                position:
+                    type: object
+                    example:
+                        { type: 'Point', coordinates: [39.807222, -76.984722] }
