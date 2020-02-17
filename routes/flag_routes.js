@@ -137,5 +137,49 @@ module.exports = [
         url: '/configs/:config_id/flags/:flag_id',
         method: 'put',
         func: flag_ctrl.updateById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/flags/{flag_id}:
+     *     delete:
+     *       summary: Supprimer un drapeau
+     *       tags: [Area]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: flag_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant du drapeau
+     *       responses:
+     *         "200":
+     *           description: Drapeau supprimé
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Drapeau supprimé
+     *         "404":
+     *           description: Zone inexistante
+     */
+    {
+        url: '/configs/:config_id/flags/:flag_id',
+        method: 'delete',
+        func: flag_ctrl.deleteById
     }
 ];

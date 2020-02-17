@@ -105,4 +105,19 @@ describe('Drapeau', () => {
             });
         });
     });
+
+    describe('Suppression', () => {
+        it('Valide', done => {
+            db.Flag.findOne({ where: { ConfigId: configId } }).then(flag => {
+                chai.request(app)
+                    .delete(`/configs/${configId}/flags/${flag.id}`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('message');
+                        done();
+                    });
+            });
+        });
+    });
 });

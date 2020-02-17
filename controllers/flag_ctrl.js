@@ -9,24 +9,11 @@ module.exports = {
     },
 
     create: (req, res, next) => {
-        const visibilityRadius = req.body.visibilityRadius,
-            actionRadius = req.body.actionRadius,
-            captureDuration = req.body.captureDuration,
-            coordinates = req.body.coordinates;
+        const coordinates = req.body.coordinates;
 
-        if (
-            visibilityRadius &&
-            actionRadius &&
-            captureDuration &&
-            coordinates
-        ) {
+        if (coordinates) {
             return req.config
-                .createFlag({
-                    visibilityRadius,
-                    actionRadius,
-                    captureDuration,
-                    position: { type: 'Point', coordinates }
-                })
+                .createFlag({ position: { type: 'Point', coordinates } })
                 .then(flag => res.json(flag))
                 .catch(err => next(err));
         }
@@ -53,5 +40,11 @@ module.exports = {
             .update(req.body)
             .then(res.json(req.flag))
             .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.flag.destroy()
+            .then(() => res.json({ message: "Drapeau supprimé" }))
+            .catch(err => next(err))
     }
 };
