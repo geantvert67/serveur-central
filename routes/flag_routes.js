@@ -68,7 +68,14 @@ module.exports = [
      *        content:
      *          application/json:
      *            schema:
-     *              $ref: '#/components/schemas/Flag'
+     *              type: object
+     *              properties:
+     *                coordinates:
+     *                  type: array
+     *                  items:
+     *                    type: number
+     *                    format: decimal
+     *                  example: [39.807222,-76.984722]
      *       responses:
      *         "200":
      *            description: Drapeau créé
@@ -95,7 +102,7 @@ module.exports = [
      * path:
      *   /configs/{config_id}/flags/{flag_id}:
      *     put:
-     *       summary: Modifier un drapeau
+     *       summary: Modifier les coordonnées d'un drapeau
      *       tags: [Flag]
      *       security:
      *         - JWTAuth : []
@@ -120,9 +127,12 @@ module.exports = [
      *          application/json:
      *            schema:
      *              properties:
-     *                captureDuration:
-     *                  type: integer
-     *                  example: 60
+     *                coordinates:
+     *                  type: array
+     *                  items:
+     *                    type: number
+     *                    format: decimal
+     *                  example: [39.807222,-76.984722]
      *       responses:
      *         "200":
      *           description: Drapeau modifié
@@ -145,7 +155,7 @@ module.exports = [
      *   /configs/{config_id}/flags/{flag_id}:
      *     delete:
      *       summary: Supprimer un drapeau
-     *       tags: [Area]
+     *       tags: [Flag]
      *       security:
      *         - JWTAuth : []
      *       parameters:

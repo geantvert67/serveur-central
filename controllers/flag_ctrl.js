@@ -37,7 +37,12 @@ module.exports = {
 
     updateById: (req, res, next) => {
         return req.flag
-            .update(req.body)
+            .update({
+                position: {
+                    type: 'Point',
+                    coordinates: req.body.coordinates
+                }
+            })
             .then(res.json(req.flag))
             .catch(err => next(err));
     },

@@ -102,7 +102,7 @@ module.exports = [
      * path:
      *   /configs/{config_id}/areas/{area_id}:
      *     put:
-     *       summary: Modifier les coordonées d'une zone
+     *       summary: Modifier les coordonnées d'une zone
      *       tags: [Area]
      *       security:
      *         - JWTAuth : []

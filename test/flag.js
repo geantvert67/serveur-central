@@ -35,12 +35,7 @@ describe('Drapeau', () => {
             chai.request(app)
                 .post(`/configs/${configId}/flags`)
                 .set('Authorization', `Bearer ${token}`)
-                .send({
-                    visibilityRadius: 1.5,
-                    actionRadius: 1.25,
-                    captureDuration: 60,
-                    coordinates: [39.807222, -76.984722]
-                })
+                .send({ coordinates: [39.807222, -76.984722] })
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
@@ -57,25 +52,9 @@ describe('Drapeau', () => {
                     done();
                 });
         });
-
-        it("Rayon d'action supérieur au rayon de visibilité", done => {
-            chai.request(app)
-                .post(`/configs/${configId}/flags`)
-                .set('Authorization', `Bearer ${token}`)
-                .send({
-                    visibilityRadius: 1.25,
-                    actionRadius: 1.5,
-                    captureDuration: 60,
-                    coordinates: [39.807222, -76.984722]
-                })
-                .end((err, res) => {
-                    res.should.have.status(500);
-                    done();
-                });
-        });
     });
 
-    describe('Récupération', () => {
+    describe("Récupération des drapeaux d'une configuration", () => {
         it('Valide', done => {
             chai.request(app)
                 .get(`/configs/${configId}/flags`)
@@ -95,11 +74,11 @@ describe('Drapeau', () => {
                 chai.request(app)
                     .put(`/configs/${configId}/flags/${flag.id}`)
                     .set('Authorization', `Bearer ${token}`)
-                    .send({ captureDuration: 600 })
+                    .send({ coordinates: [40.0, -77.0] })
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a('object');
-                        res.body.captureDuration.should.be.equal(600);
+                        res.body.position.coordinates[0].should.be.equal(40.0)
                         done();
                     });
             });
