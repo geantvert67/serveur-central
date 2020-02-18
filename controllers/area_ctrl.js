@@ -45,7 +45,9 @@ module.exports = {
     },
 
     loadById: (req, res, next) => {
-        return db.Area.findByPk(req.params.area_id)
+        return db.Area.findOne({
+            where: { id: req.params.area_id, ConfigId: req.params.config_id }
+        })
             .then(area => {
                 if (area) {
                     req.area = area;
@@ -53,7 +55,7 @@ module.exports = {
                 }
                 throw {
                     status: 404,
-                    message: 'Aucune zone ne possède cet identifiant'
+                    message: "Cette zone n'existe pas"
                 };
             })
             .catch(err => next(err));
