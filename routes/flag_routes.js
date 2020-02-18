@@ -92,6 +92,41 @@ module.exports = [
         func: flag_ctrl.create
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/flags:
+     *     delete:
+     *       summary: Supprimer tous lees drapeaux d'une configuration
+     *       tags: [Flag]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *       responses:
+     *         "200":
+     *           description: Drapeaux supprimés
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Drapeaux supprimés
+     */
+    {
+        url: '/configs/:config_id/flags',
+        method: 'delete',
+        func: flag_ctrl.deleteAll
+    },
+
     {
         url: '/configs/:config_id/flags/:flag_id',
         method: 'use',

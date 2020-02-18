@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
      *          flagActionRadius: 1.25
      *          flagCaptureDuration: 60
      */
-    class Config extends Model { }
+    class Config extends Model {}
 
     Config.init(
         {
@@ -157,7 +157,7 @@ module.exports = (sequelize, DataTypes) => {
                     min: 1,
                     max: 31536000
                 }
-            },
+            }
         },
         {
             sequelize,
@@ -177,6 +177,7 @@ module.exports = (sequelize, DataTypes) => {
         Config.hasMany(db.Team, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.Area, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.Flag, { onDelete: 'CASCADE', hooks: true });
+        Config.hasMany(db.ItemModel, { onDelete: 'CASCADE', hooks: true });
     };
 
     return Config;

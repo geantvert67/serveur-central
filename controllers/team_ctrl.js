@@ -19,7 +19,9 @@ module.exports = {
     },
 
     loadById: (req, res, next) => {
-        return db.Team.findByPk(req.params.team_id)
+        return db.Team.findOne({
+            where: { id: req.params.team_id, ConfigId: req.params.config_id }
+        })
             .then(team => {
                 if (team) {
                     req.team = team;
@@ -27,7 +29,7 @@ module.exports = {
                 }
                 throw {
                     status: 404,
-                    message: 'Aucune équipe ne possède cet identifiant'
+                    message: "Cette équipe n'existe pas"
                 };
             })
             .catch(err => next(err));

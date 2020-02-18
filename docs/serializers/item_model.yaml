@@ -1,0 +1,25 @@
+components:
+    serializers:
+        ItemModel:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                name:
+                    type: string
+                    example: mine
+                visibilityRadius:
+                    type: number
+                    format: decimal
+                    example: 1.5
+                actionRadius:
+                    type: number
+                    format: decimal
+                    example: 1.25
+                waitingPeriod:
+                    type: integer
+                    example: 600
+                autoMove:
+                    type: boolean
+                    example: false

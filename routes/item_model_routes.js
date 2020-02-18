@@ -1,14 +1,14 @@
-const area_ctrl = require('../controllers/area_ctrl'),
+const item_model_ctrl = require('../controllers/item_model_ctrl'),
     config_ctrl = require('../controllers/config_ctrl');
 
 /**
  * @swagger
  * tags:
- *   name: Area
+ *   name: ItemModel
  */
 module.exports = [
     {
-        url: '/configs/:config_id/areas',
+        url: '/configs/:config_id/item-models',
         method: 'use',
         func: config_ctrl.isConfigOwner
     },
@@ -16,10 +16,10 @@ module.exports = [
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas:
+     *   /configs/{config_id}/item-models:
      *     get:
-     *       summary: Lister toutes les zones d'une configuration
-     *       tags: [Area]
+     *       summary: Lister tous les modèles d'item d'une configuration
+     *       tags: [ItemModel]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -32,27 +32,27 @@ module.exports = [
      *           description: Identifiant de la configuration
      *       responses:
      *         "200":
-     *            description: Zones récupérées
+     *            description: Modèles d'item récupérés
      *            content:
      *              application/json:
      *                schema:
      *                  type: array
      *                  items:
-     *                    $ref: '#/components/serializers/Area'
+     *                    $ref: '#/components/serializers/ItemModel'
      */
     {
-        url: '/configs/:config_id/areas',
+        url: '/configs/:config_id/item-models',
         method: 'get',
-        func: area_ctrl.getAll
+        func: item_model_ctrl.getAll
     },
 
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas:
+     *   /configs/{config_id}/item-models:
      *     post:
-     *       summary: Créer une zone
-     *       tags: [Area]
+     *       summary: Créer un modèle d'item
+     *       tags: [ItemModel]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -68,77 +68,38 @@ module.exports = [
      *        content:
      *          application/json:
      *            schema:
-     *              properties:
-     *                coordinates:
-     *                  type: array
-     *                  example: [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
-     *                forbidden:
-     *                  type: boolean
-     *                  example: false
+     *              $ref: '#/components/schemas/ItemModel'
      *       responses:
      *         "200":
-     *            description: Zone créée
+     *            description: Modèle d'item créé
      *            content:
      *              application/json:
      *                schema:
-     *                  $ref: '#/components/serializers/Area'
+     *                  $ref: '#/components/serializers/ItemModel'
      *         "406":
      *           description: Paramètres invalides
+     *         "409":
+     *           description: Modèle d'item déjà existant
      */
     {
-        url: '/configs/:config_id/areas',
+        url: '/configs/:config_id/item-models',
         method: 'post',
-        func: area_ctrl.create
-    },
-
-    /**
-     * @swagger
-     * path:
-     *   /configs/{config_id}/areas:
-     *     delete:
-     *       summary: Supprimer toutes les zones d'une configuration
-     *       tags: [Area]
-     *       security:
-     *         - JWTAuth : []
-     *       parameters:
-     *         - in: path
-     *           name: config_id
-     *           required: true
-     *           schema:
-     *             type: integer
-     *             minimum: 1
-     *           description: Identifiant de la configuration
-     *       responses:
-     *         "200":
-     *           description: Zones supprimées
-     *           content:
-     *             application/json:
-     *               schema:
-     *                 type: object
-     *                 properties:
-     *                   message:
-     *                     type: string
-     *                     example: Zones supprimées
-     */
-    {
-        url: '/configs/:config_id/areas',
-        method: 'delete',
-        func: area_ctrl.deleteAll
+        func: item_model_ctrl.create
     },
 
     {
-        url: '/configs/:config_id/areas/:area_id',
+        url: '/configs/:config_id/item-models/:item_model_id',
         method: 'use',
-        func: area_ctrl.loadById
+        func: item_model_ctrl.loadById
     },
 
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas/{area_id}:
+     *   /configs/{config_id}/item-models/{item_model_id}:
      *     put:
-     *       summary: Modifier les coordonnées d'une zone
-     *       tags: [Area]
+     *       summary: Modifier un modèle d'item
+     *       tags: [ItemModel]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -150,44 +111,43 @@ module.exports = [
      *             minimum: 1
      *           description: Identifiant de la configuration
      *         - in: path
-     *           name: area_id
+     *           name: item_model_id
      *           required: true
      *           schema:
      *             type: integer
      *             minimum: 1
-     *           description: Identifiant de la zone
+     *           description: Identifiant du modèle d'item
      *       requestBody:
      *        required: true
      *        content:
      *          application/json:
      *            schema:
-     *              properties:
-     *                coordinates:
-     *                  type: array
-     *                  example: [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0] ]
+     *              $ref: '#/components/schemas/ItemModel'
      *       responses:
      *         "200":
-     *           description: Zone modifiée
+     *           description: Modèle d'item modifié
      *           content:
      *             application/json:
      *               schema:
-     *                 $ref: '#/components/serializers/Area'
+     *                 $ref: '#/components/serializers/ItemModel'
      *         "404":
-     *           description: Zone inexistante
+     *           description: Modèle d'item inexistant
+     *         "409":
+     *           description: Modèle d'item déjà existant
      */
     {
-        url: '/configs/:config_id/areas/:area_id',
+        url: '/configs/:config_id/item-models/:item_model_id',
         method: 'put',
-        func: area_ctrl.updateById
+        func: item_model_ctrl.updateById
     },
 
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/areas/{area_id}:
+     *   /configs/{config_id}/item-models/{item_model_id}:
      *     delete:
-     *       summary: Supprimer une zone
-     *       tags: [Area]
+     *       summary: Supprimer un modèle d'item
+     *       tags: [ItemModel]
      *       security:
      *         - JWTAuth : []
      *       parameters:
@@ -199,15 +159,15 @@ module.exports = [
      *             minimum: 1
      *           description: Identifiant de la configuration
      *         - in: path
-     *           name: area_id
+     *           name: item_model_id
      *           required: true
      *           schema:
      *             type: integer
      *             minimum: 1
-     *           description: Identifiant de la zone
+     *           description: Identifiant du modèle d'item
      *       responses:
      *         "200":
-     *           description: Zone supprimée
+     *           description: Modèle d'item supprimé
      *           content:
      *             application/json:
      *               schema:
@@ -215,13 +175,13 @@ module.exports = [
      *                 properties:
      *                   message:
      *                     type: string
-     *                     example: Zone supprimée
+     *                     example: Modèle d'item supprimé
      *         "404":
-     *           description: Zone inexistante
+     *           description: Modèle d'item inexistant
      */
     {
-        url: '/configs/:config_id/areas/:area_id',
+        url: '/configs/:config_id/item-models/:item_model_id',
         method: 'delete',
-        func: area_ctrl.deleteById
+        func: item_model_ctrl.deleteById
     }
 ];

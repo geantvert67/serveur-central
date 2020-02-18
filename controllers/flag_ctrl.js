@@ -20,8 +20,16 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
+    deleteAll: (req, res, next) => {
+        return db.Flag.destroy({ where: { ConfigId: req.params.config_id } })
+            .then(() => res.json({ message: 'Drapeaux supprimés' }))
+            .catch(err => next(err));
+    },
+
     loadById: (req, res, next) => {
-        return db.Flag.findByPk(req.params.flag_id)
+        return db.Flag.findOne({
+            where: { id: req.params.flag_id, ConfigId: req.params.config_id }
+        })
             .then(flag => {
                 if (flag) {
                     req.flag = flag;
@@ -29,7 +37,7 @@ module.exports = {
                 }
                 throw {
                     status: 404,
-                    message: 'Aucun drapeau ne possède cet identifiant'
+                    message: "Ce drapeau n'existe pas"
                 };
             })
             .catch(err => next(err));
@@ -48,8 +56,9 @@ module.exports = {
     },
 
     deleteById: (req, res, next) => {
-        return req.flag.destroy()
-            .then(() => res.json({ message: "Drapeau supprimé" }))
-            .catch(err => next(err))
+        return req.flag
+            .destroy()
+            .then(() => res.json({ message: 'Drapeau supprimé' }))
+            .catch(err => next(err));
     }
 };
