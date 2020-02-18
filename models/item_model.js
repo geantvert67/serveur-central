@@ -36,18 +36,12 @@ module.exports = (sequelize, DataTypes) => {
      *           type: boolean
      *           default: false
      *           description: Si l'item va se téléporter aléatoirement à chaque fois qu'un joueur en ramasse.
-     *         delay: 
-     *           type: integer
-     *           minimum: 1
-     *           maximum: 31536000
-     *           description: Délai d'activation de l'item en secondes.
      *       example:
      *         name: Mine
      *         visibilityRadius: 1.5
      *         actionRadius: 1.25
      *         waitingPeriode: 600
      *         autoMove: false
-     *         delay: 60
      */
     class ItemModel extends Model {
         static nameIsUnique(name, ConfigId) {
@@ -98,13 +92,6 @@ module.exports = (sequelize, DataTypes) => {
             autoMove: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
-            },
-            delay: {
-                type: DataTypes.INTEGER,
-                validate: {
-                    min: 1,
-                    max: 31536000
-                }
             }
         },
         {

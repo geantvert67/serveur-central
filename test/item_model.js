@@ -56,8 +56,7 @@ describe("Modèle d'item", () => {
                     visibilityRadius: 1.5,
                     actionRadius: 1.25,
                     waitingPeriod: 600,
-                    autoMove: false,
-                    delay: 60
+                    autoMove: false
                 })
                 .end((err, res) => {
                     res.should.have.status(200);

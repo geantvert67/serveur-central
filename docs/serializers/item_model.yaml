@@ -23,6 +23,3 @@ components:
                 autoMove:
                     type: boolean
                     example: false
-                delay:
-                    type: integer
-                    example: 60
