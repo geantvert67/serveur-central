@@ -75,5 +75,12 @@ module.exports = {
                 };
             })
             .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.itemModel
+            .destroy()
+            .then(() => res.json({ message: "Modèle d'item supprimé" }))
+            .catch(err => next(err));
     }
 };

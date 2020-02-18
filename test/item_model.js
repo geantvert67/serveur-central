@@ -128,4 +128,25 @@ describe("Modèle d'item", () => {
                 });
         });
     });
+
+    describe('Suppression', () => {
+        let itemModelId = 0;
+
+        before(() => {
+            return db.ItemModel.findOne({ where: { name: 'mine' } }).then(
+                itemModel => (itemModelId = itemModel.id)
+            );
+        });
+
+        it('Valide', done => {
+            chai.request(app)
+                .delete(`/configs/${configId}/item-models/${itemModelId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.have.property('message');
+                    done();
+                });
+        });
+    });
 });
