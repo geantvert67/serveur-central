@@ -17,7 +17,7 @@ components:
                     type: number
                     format: decimal
                     example: 1.25
-                waitingPeriode:
+                waitingPeriod:
                     type: integer
                     example: 600
                 autoMove:

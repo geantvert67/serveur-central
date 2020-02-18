@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
      *           format: decimal
      *           minimum: 0.01
      *           description: Rayon d'action de l'item. Doit être inférieur ou égal au rayon de visibilité.
-     *         waitingPeriode:
+     *         waitingPeriod:
      *           type: integer
      *           minimum: 1
      *           maximum: 31536000

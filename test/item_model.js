@@ -93,5 +93,39 @@ describe("Modèle d'item", () => {
                     done();
                 });
         });
-    })
+    });
+
+    describe('Modification', () => {
+        let itemModelId = 0;
+
+        before(() => {
+            return db.ItemModel.findOne({ where: { name: 'mine' } }).then(
+                itemModel => (itemModelId = itemModel.id)
+            );
+        });
+
+        it('Valide', done => {
+            chai.request(app)
+                .put(`/configs/${configId}/item-models/${itemModelId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({ waitingPeriod: 6000 })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.waitingPeriod.should.be.equal(6000);
+                    done();
+                });
+        });
+
+        it('Avec un nom déjà utilisé', done => {
+            chai.request(app)
+                .put(`/configs/${configId}/item-models/${itemModelId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({ name: 'lunettes' })
+                .end((err, res) => {
+                    res.should.have.status(409);
+                    done();
+                });
+        });
+    });
 });
