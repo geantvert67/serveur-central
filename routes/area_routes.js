@@ -91,6 +91,41 @@ module.exports = [
         func: area_ctrl.create
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/areas:
+     *     delete:
+     *       summary: Supprimer toutes les zones d'une configuration
+     *       tags: [Area]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *       responses:
+     *         "200":
+     *           description: Zones supprimées
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Zones supprimées
+     */
+    {
+        url: '/configs/:config_id/areas',
+        method: 'delete',
+        func: area_ctrl.deleteAll
+    },
+
     {
         url: '/configs/:config_id/areas/:area_id',
         method: 'use',

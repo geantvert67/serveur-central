@@ -44,6 +44,12 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
+    deleteAll: (req, res, next) => {
+        return db.Area.destroy({ where: { ConfigId: req.params.config_id } })
+            .then(() => res.json({ message: 'Zones supprimées' }))
+            .catch(err => next(err));
+    },
+
     loadById: (req, res, next) => {
         return db.Area.findOne({
             where: { id: req.params.area_id, ConfigId: req.params.config_id }
