@@ -27,7 +27,7 @@ module.exports = {
 
         if (coordinates && forbidden !== null) {
             if (!forbidden) {
-                return db.Area.gameZoneIsUnique()
+                return db.Area.gameZoneIsUnique(req.config.id)
                     .then(isUnique => {
                         if (isUnique) {
                             return _create(req, res, next);

@@ -35,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
      *
      */
     class Area extends Model {
-        static gameZoneIsUnique() {
-            return this.findOne({ where: { forbidden: false } })
+        static gameZoneIsUnique(ConfigId) {
+            return this.findOne({ where: { forbidden: false, ConfigId } })
                 .then(a => (a ? false : true))
                 .catch(err => false);
         }
