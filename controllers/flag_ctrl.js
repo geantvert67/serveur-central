@@ -20,6 +20,12 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
+    deleteAll: (req, res, next) => {
+        return db.Flag.destroy({ where: { ConfigId: req.params.config_id } })
+            .then(() => res.json({ message: 'Drapeaux supprimés' }))
+            .catch(err => next(err));
+    },
+
     loadById: (req, res, next) => {
         return db.Flag.findOne({
             where: { id: req.params.flag_id, ConfigId: req.params.config_id }
