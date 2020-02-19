@@ -1,0 +1,15 @@
+components:
+    serializers:
+        Item:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                quantity:
+                    type: integer
+                    example: 5
+                position:
+                    type: object
+                    example:
+                        { type: 'Point', coordinates: [39.807222, -76.984722] }
