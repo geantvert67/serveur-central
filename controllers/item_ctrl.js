@@ -1,6 +1,21 @@
 const db = require('../models');
 
 module.exports = {
+    deleteAll: (req, res, next) => {
+        return db.Item.findAll({
+            include: [{
+                model: db.ItemModel,
+                where: { ConfigId: req.params.config_id }
+            }]
+        })
+            .then(items => {
+                return Promise.all(items.map(i => i.destroy()))
+                    .then(() => res.json({ message: 'Items supprimés' }))
+                    .catch(err => next(err));
+            })
+            .catch(err => next(err));
+    },
+
     getAll: (req, res, next) => {
         return req.itemModel.getItems()
             .then(items => res.json(items))

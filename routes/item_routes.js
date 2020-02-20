@@ -9,6 +9,41 @@ module.exports = [
     /**
      * @swagger
      * path:
+     *   /configs/{config_id}/items:
+     *     delete:
+     *       summary: Supprimer tous les items d'une configuration
+     *       tags: [Item]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *       responses:
+     *         "200":
+     *           description: Items supprimés
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Items supprimés
+     */
+    {
+        url: '/configs/:config_id/items',
+        method: 'delete',
+        func: item_ctrl.deleteAll
+    },
+
+    /**
+     * @swagger
+     * path:
      *   /configs/{config_id}/item-models/{item_model_id}/items:
      *     get:
      *       summary: Lister tous les items d'un modèle
