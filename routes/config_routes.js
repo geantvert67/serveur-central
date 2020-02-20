@@ -171,6 +171,15 @@ module.exports = [
         func: [config_ctrl.isConfigOwner, config_ctrl.deleteById]
     },
 
+    {
+        url: '/configs/:config_id/export',
+        method: 'get',
+        func: [
+            config_ctrl.configIsPublicOrIsConfigOwner,
+            config_ctrl.exportById
+        ]
+    },
+
     /**
      * @swagger
      * path:
