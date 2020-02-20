@@ -75,6 +75,34 @@ describe('Item', () => {
                     res.body.length.should.be.equal(2);
                     done();
                 });
-        })
-    })
+        });
+    });
+
+    describe('Modification', () => {
+        let itemModelId = 0;
+        let itemId = 0;
+
+        before(() => {
+            return db.ItemModel.findOne({ where: { name: 'lunettes' } }).then(
+                itemModel => {
+                    itemModelId = itemModel.id;
+                    return db.Item.findOne({ where: { ItemModelId: itemModel.id } })
+                        .then(item => itemId = item.id)
+                }
+            );
+        });
+
+        it('Valide', done => {
+            chai.request(app)
+                .put(`/configs/${configId}/item-models/${itemModelId}/items/${itemId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .send({ quantity: 9, coordinates: [29.807222, -59.984722] })
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.quantity.should.be.equal(9);
+                    done();
+                });
+        });
+    });
 });

@@ -100,5 +100,74 @@ module.exports = [
         url: '/configs/:config_id/item-models/:item_model_id/items',
         method: 'post',
         func: item_ctrl.create
+    },
+
+    {
+        url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
+        method: 'use',
+        func: item_ctrl.loadById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/item-models/{item_model_id}/items/{item_id}:
+     *     put:
+     *       summary: Modifier un item
+     *       tags: [Item]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: item_model_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant du modèle d'item
+     *         - in: path
+     *           name: item_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'item
+     *       requestBody:
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                quantity:
+     *                  type: integer
+     *                  example: 5
+     *                coordinates:
+     *                  type: array
+     *                  items:
+     *                    type: number
+     *                    format: decimal
+     *                  example: [39.807222,-76.984722]
+     *       responses:
+     *         "200":
+     *           description: Item modifié
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 $ref: '#/components/serializers/Item'
+     *         "404":
+     *           description: Item inexistant
+     */
+    {
+        url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
+        method: 'put',
+        func: item_ctrl.updateById
     }
 ]
