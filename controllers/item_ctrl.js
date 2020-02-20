@@ -48,5 +48,12 @@ module.exports = {
             .update(req.body)
             .then(item => res.json(item))
             .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.item
+            .destroy()
+            .then(() => res.json({ message: "Item supprimé" }))
+            .catch(err => next(err));
     }
 }

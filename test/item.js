@@ -105,4 +105,30 @@ describe('Item', () => {
                 });
         });
     });
+
+    describe('Suppression', () => {
+        let itemModelId = 0;
+        let itemId = 0;
+
+        before(() => {
+            return db.ItemModel.findOne({ where: { name: 'lunettes' } }).then(
+                itemModel => {
+                    itemModelId = itemModel.id;
+                    return db.Item.findOne({ where: { ItemModelId: itemModel.id } })
+                        .then(item => itemId = item.id)
+                }
+            );
+        });
+
+        it('Valide', done => {
+            chai.request(app)
+                .delete(`/configs/${configId}/item-models/${itemModelId}/items/${itemId}`)
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.have.property('message');
+                    done();
+                });
+        });
+    });
 });

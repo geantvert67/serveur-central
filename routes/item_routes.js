@@ -169,5 +169,56 @@ module.exports = [
         url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
         method: 'put',
         func: item_ctrl.updateById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/item-models/{item_model_id}/items/{item_id}:
+     *     delete:
+     *       summary: Supprimer un item
+     *       tags: [Item]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: item_model_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant du modèle d'item
+     *         - in: path
+     *           name: item_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'item
+     *       responses:
+     *         "200":
+     *           description: Item supprimé
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Item supprimé
+     *         "404":
+     *           description: Item inexistant
+     */
+    {
+        url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
+        method: 'delete',
+        func: item_ctrl.deleteById
     }
 ]
