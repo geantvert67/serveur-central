@@ -4,7 +4,7 @@ const {
     ownerUsername
 } = require('../serializers/config_serializer');
 
-const _this = module.exports = {
+const _this = (module.exports = {
     getAll: (req, res, next) => {
         return db.Config.scope('public')
             .findAll({
@@ -86,10 +86,26 @@ const _this = module.exports = {
             .catch(err => next(err));
     },
 
+    exportById: (req, res, next) => {
+        return db.Config.findByPk(req.params.config_id, {
+            include: { all: true, nested: true }
+        })
+            .then(config => {
+                if (config) {
+                    return res.json(config);
+                }
+                throw {
+                    status: 404,
+                    message: 'Aucune configuration ne possède cet identifiant'
+                };
+            })
+            .catch(err => next(err));
+    },
+
     getByOwner: (req, res, next) => {
         return req.user
             .getConfigs(basicDetails)
             .then(configs => res.json(configs))
             .catch(err => next(err));
     }
-};
+});

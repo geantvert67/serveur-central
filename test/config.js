@@ -205,4 +205,23 @@ describe('Configuration', () => {
             });
         });
     });
+
+    describe('Clonage', () => {
+        it('Valide', done => {
+            db.Config.findOne({
+                name: 'configuration publique'
+            }).then(config => {
+                chai.request(app)
+                    .post(`/configs/${config.id}/clone`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.name.should.be.equal(config.name);
+                        res.body.gameMode.should.be.equal(config.gameMode);
+                        done();
+                    });
+            });
+        });
+    });
 });

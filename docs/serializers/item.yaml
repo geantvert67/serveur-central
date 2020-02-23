@@ -1,11 +1,14 @@
 components:
     serializers:
-        Flag:
+        Item:
             type: object
             properties:
-                id: 
+                id:
                     type: integer
                     example: 1
+                quantity:
+                    type: integer
+                    example: 5
                 position:
                     type: object
                     example:
