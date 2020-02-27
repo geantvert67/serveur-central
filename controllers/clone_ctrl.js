@@ -2,55 +2,60 @@ const db = require('../models');
 
 createTeams = (config, teams, next) => {
     return teams.map(team => {
-        return config.createTeam({
-            name: team.name,
-            color: team.color
-        })
+        return config
+            .createTeam({
+                name: team.name,
+                color: team.color
+            })
             .catch(err => next(err));
-    })
+    });
 };
 
 createAreas = (config, areas, next) => {
     return areas.map(area => {
-        return config.createArea({
-            position: area.position,
-            forbidden: area.forbidden
-        })
+        return config
+            .createArea({
+                position: area.position,
+                forbidden: area.forbidden
+            })
             .catch(err => next(err));
-    })
+    });
 };
 
 createFlags = (config, flags, next) => {
     return flags.map(flag => {
-        return config.createFlag({ position: flag.position })
+        return config
+            .createFlag({ position: flag.position })
             .catch(err => next(err));
-    })
+    });
 };
 
 createItemModels = (config, itemModels, next) => {
     return itemModels.map(itemModel => {
-        return config.createItemModel({
-            name: itemModel.name,
-            visibilityRadius: itemModel.visibilityRadius,
-            actionRadius: itemModel.actionRadius,
-            autoMove: itemModel.autoMove
-        })
+        return config
+            .createItemModel({
+                name: itemModel.name,
+                visibilityRadius: itemModel.visibilityRadius,
+                actionRadius: itemModel.actionRadius,
+                autoMove: itemModel.autoMove
+            })
             .then(im => {
                 return createItems(im, itemModel.Items, next);
             })
             .catch(err => next(err));
-    })
+    });
 };
 
 createItems = (itemModel, items, next) => {
     return items.map(item => {
-        return itemModel.createItem({
-            position: item.position,
-            quantity: item.quantity
-        })
+        return itemModel
+            .createItem({
+                position: item.position,
+                quantity: item.quantity
+            })
             .catch(err => next(err));
-    })
-}
+    });
+};
 
 module.exports = {
     cloneConfigById: (req, res, next) => {
@@ -59,17 +64,18 @@ module.exports = {
         })
             .then(c => {
                 if (c) {
-                    return req.user.createConfig({
-                        name: c.name,
-                        isPrivate: c.isPrivate,
-                        maxPlayers: c.maxPlayers,
-                        gameMode: c.gameMode,
-                        duration: c.duration,
-                        inventorySize: c.inventorySize,
-                        flagVisibilityRadius: c.flagVisibilityRadius,
-                        flagActionRadius: c.flagActionRadius,
-                        flagCaptureDuration: c.flagCaptureDuration
-                    })
+                    return req.user
+                        .createConfig({
+                            name: c.name,
+                            isPrivate: true,
+                            maxPlayers: c.maxPlayers,
+                            gameMode: c.gameMode,
+                            duration: c.duration,
+                            inventorySize: c.inventorySize,
+                            flagVisibilityRadius: c.flagVisibilityRadius,
+                            flagActionRadius: c.flagActionRadius,
+                            flagCaptureDuration: c.flagCaptureDuration
+                        })
                         .then(config => {
                             return Promise.all([
                                 createTeams(config, c.Teams, next),
@@ -89,4 +95,4 @@ module.exports = {
             })
             .catch(err => next(err));
     }
-}
+};
