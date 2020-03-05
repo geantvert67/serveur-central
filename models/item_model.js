@@ -63,14 +63,12 @@ module.exports = (sequelize, DataTypes) => {
             },
             visibilityRadius: {
                 type: DataTypes.DECIMAL(3, 2),
-                allowNull: false,
                 validate: {
                     min: 0.01
                 }
             },
             actionRadius: {
                 type: DataTypes.DECIMAL(3, 2),
-                allowNull: false,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {

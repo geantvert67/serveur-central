@@ -16,11 +16,7 @@ module.exports = {
     },
 
     create: (req, res, next) => {
-        if (
-            req.body.name &&
-            req.body.visibilityRadius &&
-            req.body.actionRadius
-        ) {
+        if (req.body.name) {
             return db.ItemModel.nameIsUnique(req.body.name, req.config.id)
                 .then(isUnique => {
                     if (isUnique) {

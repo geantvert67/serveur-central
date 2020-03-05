@@ -10,9 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      *        required:
      *          - name
      *          - gameMode
-     *          - flagVisibilityRadius
-     *          - flagActionRadius
-     *          - flagCaptureDuration
      *        properties:
      *          name:
      *            type: string
@@ -131,14 +128,12 @@ module.exports = (sequelize, DataTypes) => {
             },
             flagVisibilityRadius: {
                 type: DataTypes.DECIMAL(3, 2),
-                allowNull: false,
                 validate: {
                     min: 0.01
                 }
             },
             flagActionRadius: {
                 type: DataTypes.DECIMAL(3, 2),
-                allowNull: false,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {
@@ -152,7 +147,6 @@ module.exports = (sequelize, DataTypes) => {
             },
             flagCaptureDuration: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
                 validate: {
                     min: 1,
                     max: 31536000
