@@ -89,9 +89,12 @@ module.exports = [
      *             schema:
      *               type: object
      *               properties:
-     *                 password:
+     *                 currentPassword:
      *                   type: string
      *                   example: 123azerty
+     *                 newPassword:
+     *                   type: string
+     *                   example: azerty123
      *       responses:
      *         "200":
      *           description: Mot de passe modifié
