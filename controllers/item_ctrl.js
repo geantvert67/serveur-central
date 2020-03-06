@@ -1,12 +1,27 @@
 const db = require('../models');
 
 module.exports = {
+    getAllFromConfig: (req, res, next) => {
+        return db.Item.findAll({
+            include: [
+                {
+                    model: db.ItemModel,
+                    where: { ConfigId: req.params.config_id }
+                }
+            ]
+        })
+            .then(items => res.json(items))
+            .catch(err => next(err));
+    },
+
     deleteAll: (req, res, next) => {
         return db.Item.findAll({
-            include: [{
-                model: db.ItemModel,
-                where: { ConfigId: req.params.config_id }
-            }]
+            include: [
+                {
+                    model: db.ItemModel,
+                    where: { ConfigId: req.params.config_id }
+                }
+            ]
         })
             .then(items => {
                 return Promise.all(items.map(i => i.destroy()))
@@ -17,7 +32,8 @@ module.exports = {
     },
 
     getAll: (req, res, next) => {
-        return req.itemModel.getItems()
+        return req.itemModel
+            .getItems()
             .then(items => res.json(items))
             .catch(err => next(err));
     },
@@ -28,7 +44,10 @@ module.exports = {
 
         if (coordinates) {
             return req.itemModel
-                .createItem({ position: { type: 'Point', coordinates }, quantity })
+                .createItem({
+                    position: { type: 'Point', coordinates },
+                    quantity
+                })
                 .then(item => res.json(item))
                 .catch(err => next(err));
         }
@@ -68,7 +87,7 @@ module.exports = {
     deleteById: (req, res, next) => {
         return req.item
             .destroy()
-            .then(() => res.json({ message: "Item supprimé" }))
+            .then(() => res.json({ message: 'Item supprimé' }))
             .catch(err => next(err));
     }
-}
+};
