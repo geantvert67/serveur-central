@@ -34,7 +34,7 @@ describe('Configuration', () => {
                     gameMode: 'SUPREMACY',
                     flagVisibilityRadius: 1.5,
                     flagActionRadius: 1.25,
-                    flagCaptureDuration: 60,
+                    flagCaptureDuration: 60
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -53,7 +53,7 @@ describe('Configuration', () => {
                     gameMode: 'SUPREMACY',
                     flagVisibilityRadius: 1.5,
                     flagActionRadius: 1.25,
-                    flagCaptureDuration: 60,
+                    flagCaptureDuration: 60
                 })
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -72,7 +72,7 @@ describe('Configuration', () => {
                     duration: 100,
                     flagVisibilityRadius: 1.5,
                     flagActionRadius: 1.25,
-                    flagCaptureDuration: 60,
+                    flagCaptureDuration: 60
                 })
                 .end((err, res) => {
                     res.should.have.status(500);
@@ -89,7 +89,7 @@ describe('Configuration', () => {
                     gameMode: 'TIME',
                     flagVisibilityRadius: 1.5,
                     flagActionRadius: 1.25,
-                    flagCaptureDuration: 60,
+                    flagCaptureDuration: 60
                 })
                 .end((err, res) => {
                     res.should.have.status(500);
@@ -106,7 +106,7 @@ describe('Configuration', () => {
                     gameMode: 'SUPREMACY',
                     flagVisibilityRadius: 1.25,
                     flagActionRadius: 1.5,
-                    flagCaptureDuration: 60,
+                    flagCaptureDuration: 60
                 })
                 .end((err, res) => {
                     res.should.have.status(500);
@@ -219,6 +219,23 @@ describe('Configuration', () => {
                         res.body.should.be.a('object');
                         res.body.name.should.be.equal(config.name);
                         res.body.gameMode.should.be.equal(config.gameMode);
+                        done();
+                    });
+            });
+        });
+    });
+
+    describe('Téléchargement', () => {
+        it('Valide', done => {
+            db.Config.findOne({
+                name: 'configuration publique'
+            }).then(config => {
+                chai.request(app)
+                    .get(`/configs/${config.id}/export`)
+                    .set('Authorization', `Bearer ${token}`)
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.type.should.be.equal('application/zip');
                         done();
                     });
             });

@@ -211,6 +211,41 @@ module.exports = [
     /**
      * @swagger
      * path:
+     *   /configs/{config_id}/export:
+     *     get:
+     *       summary: Télécharger une configuration
+     *       tags: [Config]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *       responses:
+     *         "200":
+     *           description: Configuration téléchargée
+     *           content:
+     *             application/zip:
+     *               schema:
+     *                 type: string
+     *                 format: binary
+     */
+    {
+        url: '/configs/:config_id/export',
+        method: 'get',
+        func: [
+            config_ctrl.configIsPublicOrIsConfigOwner,
+            config_ctrl.exportById
+        ]
+    },
+
+    /**
+     * @swagger
+     * path:
      *   /user/configs:
      *     get:
      *       summary: Lister toutes les colocations de l'utilisateur connecté
