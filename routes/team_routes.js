@@ -179,5 +179,151 @@ module.exports = [
         url: '/configs/:config_id/teams/:team_id',
         method: 'delete',
         func: team_ctrl.deleteById
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/teams/{team_id}/users:
+     *     get:
+     *       summary: Lister les membres d'une équipe
+     *       tags: [Team]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: team_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'équipe
+     *       responses:
+     *         "200":
+     *           description: Membres récupérés
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/serializers/UserWithoutPassword'
+     *         "404":
+     *           description: Équipe inexistante
+     */
+    {
+        url: '/configs/:config_id/teams/:team_id/users',
+        method: 'get',
+        func: team_ctrl.getPlayers
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/teams/{team_id}/users:
+     *     post:
+     *       summary: Ajouter un membre dans une équipe
+     *       tags: [Team]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: team_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'équipe
+     *       requestBody:
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              type: object
+     *              properties:
+     *                username:
+     *                  type: string
+     *                  example: clement284
+     *       responses:
+     *         "200":
+     *           description: Membre ajouté
+     *           content:
+     *             application/json:
+     *               $ref: '#/components/serializers/UserWithoutPassword'
+     *         "400":
+     *           description: Équipe pleine
+     *         "404":
+     *           description: Utilisateur inexistant
+     *         "409":
+     *           description: Utilisateur faisant déjà partie de l'équipe
+     */
+    {
+        url: '/configs/:config_id/teams/:team_id/users',
+        method: 'post',
+        func: team_ctrl.addPlayer
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/teams/{team_id}/users/{user_id}:
+     *     delete:
+     *       summary: Retirer un membre d'une équipe
+     *       tags: [Team]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *         - in: path
+     *           name: team_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'équipe
+     *         - in: path
+     *           name: user_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'utilisateur
+     *       responses:
+     *         "200":
+     *           description: Membre retiré
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Membre retiré
+     *         "404":
+     *           description: Équipe inexistante
+     */
+    {
+        url: '/configs/:config_id/teams/:team_id/users/:user_id',
+        method: 'delete',
+        func: team_ctrl.removePlayer
     }
 ];

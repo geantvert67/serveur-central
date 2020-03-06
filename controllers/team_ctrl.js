@@ -47,5 +47,72 @@ module.exports = {
             .destroy()
             .then(() => res.json({ message: 'Équipe supprimée' }))
             .catch(err => next(err));
+    },
+
+    getPlayers: (req, res, next) => {
+        return req.team
+            .getUsers({
+                attributes: ['id', 'username'],
+                joinTableAttributes: []
+            })
+            .then(players => res.json(players))
+            .catch(err => next(err));
+    },
+
+    addPlayer: (req, res, next) => {
+        return req.team
+            .countUsers()
+            .then(nbUsers => {
+                const maxPlayers = req.config.maxPlayers;
+                if (nbUsers < maxPlayers || maxPlayers === null) {
+                    return db.User.findOne({
+                        where: { username: req.body.username }
+                    })
+                        .then(user => {
+                            if (user) {
+                                return req.team
+                                    .hasUser(user)
+                                    .then(hasUser => {
+                                        if (!hasUser) {
+                                            return req.team
+                                                .addUser(user)
+                                                .then(() => res.json(user))
+                                                .catch(err => next(err));
+                                        }
+                                        throw {
+                                            status: 409,
+                                            message:
+                                                'Cet utilisateur est déjà dans cette équipe'
+                                        };
+                                    })
+                                    .catch(err => next(err));
+                            }
+                            throw {
+                                status: 404,
+                                message: "Cet utilisateur n'existe pas"
+                            };
+                        })
+                        .catch(err => next(err));
+                }
+                throw {
+                    status: 400,
+                    message: 'Cette équipe est pleine'
+                };
+            })
+            .catch(err => next(err));
+    },
+
+    removePlayer: (req, res, next) => {
+        return db.User.findByPk(req.params.user_id)
+            .then(user => {
+                if (user) {
+                    return req.team
+                        .removeUser(user)
+                        .then(() => res.json({ message: 'Membre retiré' }))
+                        .catch(err => next(err));
+                }
+                throw { status: 404, message: "Cet utilisateur n'existe pas" };
+            })
+            .catch(err => next(err));
     }
 };

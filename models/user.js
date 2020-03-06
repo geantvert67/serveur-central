@@ -60,7 +60,9 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
             modelName: 'User',
             defaultScope: {
-                attributes: { exclude: ['password'] }
+                attributes: {
+                    exclude: ['password']
+                }
             },
             scopes: {
                 withPassword: {
@@ -72,6 +74,7 @@ module.exports = (sequelize, DataTypes) => {
 
     User.associate = db => {
         User.hasMany(db.Config, { foreignKey: 'OwnerId' });
+        User.belongsToMany(db.Team, { through: 'TeamPlayers' });
     };
 
     return User;

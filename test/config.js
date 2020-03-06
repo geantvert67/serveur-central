@@ -51,6 +51,7 @@ describe('Configuration', () => {
                     name: 'configuration publique',
                     isPrivate: false,
                     gameMode: 'SUPREMACY',
+                    maxPlayers: 2,
                     flagVisibilityRadius: 1.5,
                     flagActionRadius: 1.25,
                     flagCaptureDuration: 60
