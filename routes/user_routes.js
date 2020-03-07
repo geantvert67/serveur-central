@@ -115,5 +115,37 @@ module.exports = [
         url: '/user/password',
         method: 'put',
         func: user_ctrl.updatePassword
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /users:
+     *     get:
+     *       summary: Lister 5 utilisateurs correspondant à un nom d'utilisateur
+     *       tags: [User]
+     *       security:
+     *         - JWTAuth: []
+     *       parameters:
+     *         - in: query
+     *           name: username
+     *           schema:
+     *             type: string
+     *           description:
+     *             Le nom d'utilisateur recherché
+     *       responses:
+     *         "200":
+     *           description: Utilisateurs récupérés
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/serializers/UserWithoutPassword'
+     */
+    {
+        url: '/users',
+        method: 'get',
+        func: user_ctrl.getAll
     }
 ];

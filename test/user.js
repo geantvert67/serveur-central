@@ -109,4 +109,18 @@ describe('Utilisateur', () => {
                 });
         });
     });
+
+    describe("Récupérer des utilisateurs à partir d'un nom d'utilisateur", () => {
+        it('Valide', done => {
+            chai.request(app)
+                .get('/users?username=thom')
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    res.body.length.should.be.equal(1);
+                    done();
+                });
+        });
+    });
 });
