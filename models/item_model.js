@@ -9,8 +9,6 @@ module.exports = (sequelize, DataTypes) => {
      *       type: object
      *       required:
      *         - name
-     *         - visibilityRadius
-     *         - actionRadius
      *       properties:
      *         name:
      *           type: string
