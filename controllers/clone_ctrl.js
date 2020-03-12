@@ -1,16 +1,5 @@
 const db = require('../models');
 
-createTeams = (config, teams, next) => {
-    return teams.map(team => {
-        return config
-            .createTeam({
-                name: team.name,
-                color: team.color
-            })
-            .catch(err => next(err));
-    });
-};
-
 createAreas = (config, areas, next) => {
     return areas.map(area => {
         return config
@@ -78,7 +67,6 @@ module.exports = {
                         })
                         .then(config => {
                             return Promise.all([
-                                createTeams(config, c.Teams, next),
                                 createAreas(config, c.Areas, next),
                                 createFlags(config, c.Flags, next),
                                 createItemModels(config, c.ItemModels, next)

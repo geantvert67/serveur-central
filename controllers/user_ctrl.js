@@ -1,4 +1,5 @@
-const db = require('../models');
+const db = require('../models'),
+    { Op } = require('sequelize');
 
 module.exports = {
     getCurrent: (req, res, next) => {
@@ -51,5 +52,17 @@ module.exports = {
                 .catch(err => next(err));
         }
         throw { status: 406, message: 'Paramètres invalides' };
+    },
+
+    getAll: (req, res, next) => {
+        return db.User.findAll({
+            where: {
+                username: { [Op.like]: `${req.query.username}%` }
+            },
+            order: ['username'],
+            limit: 5
+        })
+            .then(users => res.json(users))
+            .catch(err => next(err));
     }
 };

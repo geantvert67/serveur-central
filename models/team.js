@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Team.associate = db => {
         Team.belongsTo(db.Config);
+        Team.belongsToMany(db.User, { through: 'TeamPlayers' });
     };
 
     return Team;

@@ -27,8 +27,9 @@ describe('Item', () => {
             }).then(c => {
                 configId = c.id;
             }),
-            db.ItemModel.findOne({ where: { name: 'lunettes' } })
-                .then(im => itemModelId = im.id),
+            db.ItemModel.findOne({ where: { name: 'lunettes' } }).then(
+                im => (itemModelId = im.id)
+            ),
             db.Item.destroy({ truncate: { cascade: true } })
         ]);
     });
@@ -65,9 +66,21 @@ describe('Item', () => {
     });
 
     describe('Récupération', () => {
-        it('Valide', done => {
+        it("A partir d'un modèle d'item", done => {
             chai.request(app)
                 .get(`/configs/${configId}/item-models/${itemModelId}/items`)
+                .set('Authorization', `Bearer ${token}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    res.body.length.should.be.equal(2);
+                    done();
+                });
+        });
+
+        it("A partir d'une configuration", done => {
+            chai.request(app)
+                .get(`/configs/${configId}/items`)
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(200);
@@ -86,15 +99,18 @@ describe('Item', () => {
             return db.ItemModel.findOne({ where: { name: 'lunettes' } }).then(
                 itemModel => {
                     itemModelId = itemModel.id;
-                    return db.Item.findOne({ where: { ItemModelId: itemModel.id } })
-                        .then(item => itemId = item.id)
+                    return db.Item.findOne({
+                        where: { ItemModelId: itemModel.id }
+                    }).then(item => (itemId = item.id));
                 }
             );
         });
 
         it('Valide', done => {
             chai.request(app)
-                .put(`/configs/${configId}/item-models/${itemModelId}/items/${itemId}`)
+                .put(
+                    `/configs/${configId}/item-models/${itemModelId}/items/${itemId}`
+                )
                 .set('Authorization', `Bearer ${token}`)
                 .send({ quantity: 9, coordinates: [29.807222, -59.984722] })
                 .end((err, res) => {
@@ -114,15 +130,18 @@ describe('Item', () => {
             return db.ItemModel.findOne({ where: { name: 'lunettes' } }).then(
                 itemModel => {
                     itemModelId = itemModel.id;
-                    return db.Item.findOne({ where: { ItemModelId: itemModel.id } })
-                        .then(item => itemId = item.id)
+                    return db.Item.findOne({
+                        where: { ItemModelId: itemModel.id }
+                    }).then(item => (itemId = item.id));
                 }
             );
         });
 
         it('Valide', done => {
             chai.request(app)
-                .delete(`/configs/${configId}/item-models/${itemModelId}/items/${itemId}`)
+                .delete(
+                    `/configs/${configId}/item-models/${itemModelId}/items/${itemId}`
+                )
                 .set('Authorization', `Bearer ${token}`)
                 .end((err, res) => {
                     res.should.have.status(200);

@@ -10,6 +10,39 @@ module.exports = [
      * @swagger
      * path:
      *   /configs/{config_id}/items:
+     *     get:
+     *       summary: Lister tous les items d'une configuration
+     *       tags: [Item]
+     *       security:
+     *         - JWTAuth : []
+     *       parameters:
+     *         - in: path
+     *           name: config_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la configuration
+     *       responses:
+     *         "200":
+     *           description: Items récupérés
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/serializers/Item'
+     */
+    {
+        url: '/configs/:config_id/items',
+        method: 'get',
+        func: item_ctrl.getAllFromConfig
+    },
+
+    /**
+     * @swagger
+     * path:
+     *   /configs/{config_id}/items:
      *     delete:
      *       summary: Supprimer tous les items d'une configuration
      *       tags: [Item]
@@ -256,4 +289,4 @@ module.exports = [
         method: 'delete',
         func: item_ctrl.deleteById
     }
-]
+];

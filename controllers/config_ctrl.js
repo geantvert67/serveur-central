@@ -1,8 +1,10 @@
-const db = require('../models');
-const {
-    basicDetails,
-    ownerUsername
-} = require('../serializers/config_serializer');
+const fs = require('fs'),
+    AdmZip = require('adm-zip'),
+    db = require('../models'),
+    {
+        basicDetails,
+        ownerUsername
+    } = require('../serializers/config_serializer');
 
 const _this = (module.exports = {
     getAll: (req, res, next) => {
@@ -86,7 +88,24 @@ const _this = (module.exports = {
         })
             .then(config => {
                 if (config) {
-                    return res.json(config);
+                    return fs.writeFile('public/config.json', '', err => {
+                        if (err) next(err);
+                        return fs.appendFile(
+                            'public/config.json',
+                            JSON.stringify(config.get({ plain: true })),
+                            err => {
+                                if (err) next(err);
+
+                                const zip = new AdmZip();
+                                zip.addLocalFile('public/config.json');
+                                zip.writeZip('public/installer.zip');
+
+                                return res.sendFile('installer.zip', {
+                                    root: 'public'
+                                });
+                            }
+                        );
+                    });
                 }
                 throw {
                     status: 404,
