@@ -237,10 +237,7 @@ module.exports = [
     {
         url: '/configs/:config_id/export',
         method: 'get',
-        func: [
-            config_ctrl.configIsPublicOrIsConfigOwner,
-            config_ctrl.exportById
-        ]
+        func: [config_ctrl.isConfigOwner, config_ctrl.exportById]
     },
 
     /**
