@@ -127,13 +127,13 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
             flagVisibilityRadius: {
-                type: DataTypes.DECIMAL(3, 2),
+                type: DataTypes.DECIMAL,
                 validate: {
                     min: 0.01
                 }
             },
             flagActionRadius: {
-                type: DataTypes.DECIMAL(3, 2),
+                type: DataTypes.DECIMAL,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {
