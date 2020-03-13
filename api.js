@@ -18,7 +18,7 @@ app.use(cors());
 
 app.set('json replacer', (k, v) => (v === null ? undefined : v));
 
-app.use(/^(?!\/(signin|signup|docs)).*$/, auth_ctrl.isAuthenticated);
+app.use(/^(?!\/(signin|signup|docs|games)).*$/, auth_ctrl.isAuthenticated);
 
 app.use('/configs/:config_id', config_ctrl.loadById);
 

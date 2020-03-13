@@ -1,0 +1,34 @@
+components:
+    serializers:
+        Game:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                ip:
+                    type: string
+                    example: '127.0.0.1'
+                port:
+                    type: integer
+                    example: 8081
+                ConfigId:
+                    type: integer
+                    example: 1
+                Config:
+                    $ref: '#/components/serializers/DetailedConfig'
+        CreatedGame:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                ip:
+                    type: string
+                    example: '127.0.0.1'
+                port:
+                    type: integer
+                    example: 8081
+                ConfigId:
+                    type: integer
+                    example: 1
