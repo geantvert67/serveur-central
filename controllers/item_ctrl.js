@@ -14,7 +14,7 @@ module.exports = {
             .catch(err => next(err));
     },
 
-    deleteAll: (req, res, next) => {
+    deleteAllFromConfig: (req, res, next) => {
         return db.Item.findAll({
             include: [
                 {
@@ -52,6 +52,17 @@ module.exports = {
                 .catch(err => next(err));
         }
         throw { status: 406, message: 'Paramètres invalides' };
+    },
+
+    deleteAll: (req, res, next) => {
+        return req.itemModel
+            .getItems()
+            .then(items => {
+                return Promise.all(items.map(i => i.destroy()))
+                    .then(() => res.json({ message: 'Items supprimés' }))
+                    .catch(err => next(err));
+            })
+            .catch(err => next(err));
     },
 
     loadById: (req, res, next) => {
