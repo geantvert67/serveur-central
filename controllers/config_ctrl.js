@@ -18,7 +18,11 @@ const _this = (module.exports = {
     },
 
     create: (req, res, next) => {
-        if (req.body.name && req.body.gameMode) {
+        if (
+            req.body.name &&
+            req.body.gameMode &&
+            req.body.flagCaptureDuration
+        ) {
             return req.user
                 .createConfig(req.body)
                 .then(config => res.json(config))

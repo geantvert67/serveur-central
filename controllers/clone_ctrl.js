@@ -61,6 +61,8 @@ module.exports = {
                             gameMode: c.gameMode,
                             duration: c.duration,
                             inventorySize: c.inventorySize,
+                            playerVisibilityRadius: c.playerVisibilityRadius,
+                            playerActionRadius: c.playerActionRadius,
                             flagVisibilityRadius: c.flagVisibilityRadius,
                             flagActionRadius: c.flagActionRadius,
                             flagCaptureDuration: c.flagCaptureDuration

@@ -43,6 +43,14 @@ components:
                 inventorySize:
                     type: integer
                     example: 7
+                playerVisibilityRadius:
+                    type: number
+                    format: decimal
+                    example: 3
+                playerActionRadius:
+                    type: number
+                    format: decimal
+                    example: 2.75
                 flagVisibilityRadius:
                     type: number
                     format: decimal
@@ -85,6 +93,14 @@ components:
                 inventorySize:
                     type: integer
                     example: 7
+                playerVisibilityRadius:
+                    type: number
+                    format: decimal
+                    example: 3
+                playerActionRadius:
+                    type: number
+                    format: decimal
+                    example: 2.75
                 flagVisibilityRadius:
                     type: number
                     format: decimal

@@ -32,8 +32,6 @@ describe('Configuration', () => {
                 .send({
                     name: 'configuration privée',
                     gameMode: 'SUPREMACY',
-                    flagVisibilityRadius: 1.5,
-                    flagActionRadius: 1.25,
                     flagCaptureDuration: 60
                 })
                 .end((err, res) => {
@@ -52,8 +50,6 @@ describe('Configuration', () => {
                     isPrivate: false,
                     gameMode: 'SUPREMACY',
                     maxPlayers: 2,
-                    flagVisibilityRadius: 1.5,
-                    flagActionRadius: 1.25,
                     flagCaptureDuration: 60
                 })
                 .end((err, res) => {
@@ -71,8 +67,6 @@ describe('Configuration', () => {
                     name: 'configuration',
                     gameMode: 'SUPREMACY',
                     duration: 100,
-                    flagVisibilityRadius: 1.5,
-                    flagActionRadius: 1.25,
                     flagCaptureDuration: 60
                 })
                 .end((err, res) => {
@@ -88,8 +82,6 @@ describe('Configuration', () => {
                 .send({
                     name: 'configuration',
                     gameMode: 'TIME',
-                    flagVisibilityRadius: 1.5,
-                    flagActionRadius: 1.25,
                     flagCaptureDuration: 60
                 })
                 .end((err, res) => {
@@ -107,6 +99,23 @@ describe('Configuration', () => {
                     gameMode: 'SUPREMACY',
                     flagVisibilityRadius: 1.25,
                     flagActionRadius: 1.5,
+                    flagCaptureDuration: 60
+                })
+                .end((err, res) => {
+                    res.should.have.status(500);
+                    done();
+                });
+        });
+
+        it("Rayon d'action des joueurs supérieur au rayon de visibilité", done => {
+            chai.request(app)
+                .post('/configs')
+                .set('Authorization', `Bearer ${token}`)
+                .send({
+                    name: 'configuration privée',
+                    gameMode: 'SUPREMACY',
+                    playerVisibilityRadius: 1.25,
+                    playerActionRadius: 1.5,
                     flagCaptureDuration: 60
                 })
                 .end((err, res) => {
