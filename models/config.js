@@ -44,22 +44,22 @@ module.exports = (sequelize, DataTypes) => {
      *            description: Nombre d'objets qu'un joueur pourra avoir dans son inventaire.
      *          playerVisibilityRadius:
      *            type: number
-     *            format: decimal
+     *            format: double
      *            minimum: 0.01
      *            description: Rayon de visibilité des joueurs.
      *          playerActionRadius:
      *            type: number
-     *            format: decimal
+     *            format: double
      *            minimum: 0.01
      *            description: Rayon d'action des joueurs. Doit être inférieur ou égal au rayon de visibilité.
      *          flagVisibilityRadius:
      *            type: number
-     *            format: decimal
+     *            format: double
      *            minimum: 0.01
      *            description: Rayon de visibilité des drapeaux.
      *          flagActionRadius:
      *            type: number
-     *            format: decimal
+     *            format: double
      *            minimum: 0.01
      *            description: Rayon d'action des drapeaux. Doit être inférieur ou égal au rayon de visibilité.
      *          flagCaptureDuration:
@@ -140,13 +140,13 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
             playerVisibilityRadius: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01
                 }
             },
             playerActionRadius: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {
@@ -159,13 +159,13 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
             flagVisibilityRadius: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01
                 }
             },
             flagActionRadius: {
-                type: DataTypes.DECIMAL,
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {
