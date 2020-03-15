@@ -17,12 +17,12 @@ module.exports = (sequelize, DataTypes) => {
      *           description: Nom de l'item.
      *         visibilityRadius:
      *           type: number
-     *           format: decimal
+     *           format: double
      *           minimum: 0.01
      *           description: Rayon de visibilité de l'item.
      *         actionRadius:
      *           type: number
-     *           format: decimal
+     *           format: double
      *           minimum: 0.01
      *           description: Rayon d'action de l'item. Doit être inférieur ou égal au rayon de visibilité.
      *         waitingPeriod:
@@ -60,13 +60,13 @@ module.exports = (sequelize, DataTypes) => {
                 }
             },
             visibilityRadius: {
-                type: DataTypes.DECIMAL(3, 2),
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01
                 }
             },
             actionRadius: {
-                type: DataTypes.DECIMAL(3, 2),
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {

@@ -24,12 +24,12 @@ module.exports = (sequelize, DataTypes) => {
      *               type: array
      *               items:
      *                 type: number
-     *                 format: decimal
+     *                 format: double
      *       example:
      *         quantity: 5
      *         position: { type: 'Point', coordinates: [39.807222,-76.984722]}
      */
-    class Item extends Model { }
+    class Item extends Model {}
 
     Item.init(
         {
@@ -51,11 +51,11 @@ module.exports = (sequelize, DataTypes) => {
             modelName: 'Item',
             timestamps: false
         }
-    )
+    );
 
     Item.associate = db => {
         Item.belongsTo(db.ItemModel);
-    }
+    };
 
     return Item;
-}
+};

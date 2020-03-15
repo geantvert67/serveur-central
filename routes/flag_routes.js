@@ -74,7 +74,7 @@ module.exports = [
      *                  type: array
      *                  items:
      *                    type: number
-     *                    format: decimal
+     *                    format: double
      *                  example: [39.807222,-76.984722]
      *       responses:
      *         "200":
@@ -166,7 +166,7 @@ module.exports = [
      *                  type: array
      *                  items:
      *                    type: number
-     *                    format: decimal
+     *                    format: double
      *                  example: [39.807222,-76.984722]
      *       responses:
      *         "200":

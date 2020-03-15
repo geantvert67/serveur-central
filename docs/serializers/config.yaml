@@ -43,13 +43,21 @@ components:
                 inventorySize:
                     type: integer
                     example: 7
+                playerVisibilityRadius:
+                    type: number
+                    format: double
+                    example: 3
+                playerActionRadius:
+                    type: number
+                    format: double
+                    example: 2.75
                 flagVisibilityRadius:
                     type: number
-                    format: decimal
+                    format: double
                     example: 1.5
                 flagActionRadius:
                     type: number
-                    format: decimal
+                    format: double
                     example: 1.25
                 flagCaptureDuration:
                     type: integer
@@ -85,13 +93,21 @@ components:
                 inventorySize:
                     type: integer
                     example: 7
+                playerVisibilityRadius:
+                    type: number
+                    format: double
+                    example: 3
+                playerActionRadius:
+                    type: number
+                    format: double
+                    example: 2.75
                 flagVisibilityRadius:
                     type: number
-                    format: decimal
+                    format: double
                     example: 1.5
                 flagActionRadius:
                     type: number
-                    format: decimal
+                    format: double
                     example: 1.25
                 flagCaptureDuration:
                     type: integer

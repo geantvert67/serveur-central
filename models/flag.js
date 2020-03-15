@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
      *               type: array
      *               items:
      *                 type: number
-     *                 format: decimal
+     *                 format: double
      *       example:
      *         position: { type: 'Point', coordinates: [39.807222,-76.984722]}
      */
-    class Flag extends Model { }
+    class Flag extends Model {}
 
     Flag.init(
         {

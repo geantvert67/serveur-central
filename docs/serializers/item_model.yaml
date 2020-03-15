@@ -11,11 +11,11 @@ components:
                     example: mine
                 visibilityRadius:
                     type: number
-                    format: decimal
+                    format: double
                     example: 1.5
                 actionRadius:
                     type: number
-                    format: decimal
+                    format: double
                     example: 1.25
                 waitingPeriod:
                     type: integer

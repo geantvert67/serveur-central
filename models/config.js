@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      *        required:
      *          - name
      *          - gameMode
+     *          - flagCaptureDuration
      *        properties:
      *          name:
      *            type: string
@@ -41,14 +42,24 @@ module.exports = (sequelize, DataTypes) => {
      *            maximum: 10
      *            default: 2
      *            description: Nombre d'objets qu'un joueur pourra avoir dans son inventaire.
+     *          playerVisibilityRadius:
+     *            type: number
+     *            format: double
+     *            minimum: 0.01
+     *            description: Rayon de visibilité des joueurs.
+     *          playerActionRadius:
+     *            type: number
+     *            format: double
+     *            minimum: 0.01
+     *            description: Rayon d'action des joueurs. Doit être inférieur ou égal au rayon de visibilité.
      *          flagVisibilityRadius:
      *            type: number
-     *            format: decimal
+     *            format: double
      *            minimum: 0.01
      *            description: Rayon de visibilité des drapeaux.
      *          flagActionRadius:
      *            type: number
-     *            format: decimal
+     *            format: double
      *            minimum: 0.01
      *            description: Rayon d'action des drapeaux. Doit être inférieur ou égal au rayon de visibilité.
      *          flagCaptureDuration:
@@ -63,6 +74,8 @@ module.exports = (sequelize, DataTypes) => {
      *          duration: 600
      *          inventorySize: 7
      *          maxPlayers: 10
+     *          playerVisibilityRadius: 3
+     *          playerActionRadius: 2.75
      *          flagVisibilityRadius: 1.5
      *          flagActionRadius: 1.25
      *          flagCaptureDuration: 60
@@ -126,14 +139,33 @@ module.exports = (sequelize, DataTypes) => {
                     max: 10
                 }
             },
+            playerVisibilityRadius: {
+                type: DataTypes.DOUBLE,
+                validate: {
+                    min: 0.01
+                }
+            },
+            playerActionRadius: {
+                type: DataTypes.DOUBLE,
+                validate: {
+                    min: 0.01,
+                    actionGreaterThanVisibility(value) {
+                        if (value > this.playerVisibilityRadius) {
+                            throw new Error(
+                                "Le rayon d'action doit être inférieur ou égal au rayon de visibilité"
+                            );
+                        }
+                    }
+                }
+            },
             flagVisibilityRadius: {
-                type: DataTypes.DECIMAL(3, 2),
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01
                 }
             },
             flagActionRadius: {
-                type: DataTypes.DECIMAL(3, 2),
+                type: DataTypes.DOUBLE,
                 validate: {
                     min: 0.01,
                     actionGreaterThanVisibility(value) {
@@ -147,6 +179,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             flagCaptureDuration: {
                 type: DataTypes.INTEGER,
+                allowNull: false,
                 validate: {
                     min: 1,
                     max: 31536000

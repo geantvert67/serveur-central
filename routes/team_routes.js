@@ -38,7 +38,7 @@ module.exports = [
      *                schema:
      *                  type: array
      *                  items:
-     *                    $ref: '#/components/schemas/Team'
+     *                    $ref: '#/components/serializers/CreatedTeam'
      */
     {
         url: '/configs/:config_id/teams',
