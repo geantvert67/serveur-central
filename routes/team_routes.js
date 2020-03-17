@@ -262,7 +262,8 @@ module.exports = [
      *           description: Membre ajouté
      *           content:
      *             application/json:
-     *               $ref: '#/components/serializers/UserWithoutPassword'
+     *               schema:
+     *                 $ref: '#/components/serializers/UserWithoutPassword'
      *         "400":
      *           description: Équipe pleine
      *         "404":
