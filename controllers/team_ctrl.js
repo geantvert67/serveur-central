@@ -70,19 +70,39 @@ module.exports = {
                     })
                         .then(user => {
                             if (user) {
-                                return req.team
-                                    .hasUser(user)
-                                    .then(hasUser => {
-                                        if (!hasUser) {
+                                return user
+                                    .getTeams({
+                                        where: {
+                                            ConfigId: req.params.config_id
+                                        }
+                                    })
+                                    .then(teams => {
+                                        if (teams.length === 0) {
                                             return req.team
-                                                .addUser(user)
-                                                .then(() => res.json(user))
+                                                .hasUser(user)
+                                                .then(hasUser => {
+                                                    if (!hasUser) {
+                                                        return req.team
+                                                            .addUser(user)
+                                                            .then(() =>
+                                                                res.json(user)
+                                                            )
+                                                            .catch(err =>
+                                                                next(err)
+                                                            );
+                                                    }
+                                                    throw {
+                                                        status: 409,
+                                                        message:
+                                                            'Cet utilisateur est déjà dans cette équipe'
+                                                    };
+                                                })
                                                 .catch(err => next(err));
                                         }
                                         throw {
                                             status: 409,
                                             message:
-                                                'Cet utilisateur est déjà dans cette équipe'
+                                                'Cet utilisateur est déjà dans une autre équipe'
                                         };
                                     })
                                     .catch(err => next(err));
