@@ -205,7 +205,6 @@ module.exports = (sequelize, DataTypes) => {
         Config.hasMany(db.Area, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.Flag, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.ItemModel, { onDelete: 'CASCADE', hooks: true });
-        Config.hasMany(db.Game, { onDelete: 'CASCADE', hooks: true });
     };
 
     return Config;

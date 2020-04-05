@@ -7,4 +7,3 @@ require('./area');
 require('./flag');
 require('./item_model');
 require('./item');
-require('./game');

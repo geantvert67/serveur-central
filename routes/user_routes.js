@@ -117,6 +117,18 @@ module.exports = [
         func: user_ctrl.updatePassword
     },
 
+    {
+        url: '/user/invitations',
+        method: 'get',
+        func: user_ctrl.getInvitations
+    },
+
+    {
+        url: '/user/invitations/:invitation_id',
+        method: 'delete',
+        func: user_ctrl.deleteInvitationById
+    },
+
     /**
      * @swagger
      * path:

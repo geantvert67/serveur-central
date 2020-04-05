@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      *       required:
      *         - ip
      *         - port
+     *         - name
+     *         - gameMode
      *       properties:
      *         ip:
      *           type: string
@@ -17,9 +19,33 @@ module.exports = (sequelize, DataTypes) => {
      *         port:
      *           type: integer
      *           description: Port de la partie
+     *         name:
+     *           type: string
+     *           minLength: 2
+     *           maxLength: 50
+     *           description: Nom de la partie
+     *         gameMode:
+     *           type: string
+     *           in: query
+     *           enum: ["FLAG", "TIME", "SUPREMACY"]
+     *           description: Mode de jeu
+     *         published:
+     *           type: boolean
+     *           default: false
+     *           description: Si la partie est visible par tous les joueurs ou non
+     *         launched:
+     *           type: boolean
+     *           default: false
+     *           description: Si la partie a déjà commencé
+     *         ended:
+     *           type: boolean
+     *           default: false
+     *           description: Si la partie est finie
      *       example:
      *         ip: 127.0.0.1
      *         port: 8081
+     *         name: partie 1
+     *         gameMode: SUPREMACY
      */
     class Game extends Model {}
 
@@ -32,6 +58,34 @@ module.exports = (sequelize, DataTypes) => {
             port: {
                 type: DataTypes.INTEGER,
                 allowNull: false
+            },
+            published: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+            },
+            launched: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+            },
+            ended: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
+            },
+            name: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    min: 2,
+                    max: 50
+                }
+            },
+            gameMode: {
+                type: DataTypes.ENUM,
+                values: ['FLAG', 'TIME', 'SUPREMACY'],
+                allowNull: false
             }
         },
         {
@@ -42,7 +96,8 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Game.associate = db => {
-        Game.belongsTo(db.Config);
+        Game.belongsTo(db.User, { as: 'Admin' });
+        Game.hasMany(db.Invitations);
     };
 
     return Game;

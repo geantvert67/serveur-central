@@ -54,6 +54,34 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
+    getInvitations: (req, res, next) => {
+        return req.user
+            .getInvitations({ include: db.Game })
+            .then(invitations => res.json(invitations))
+            .catch(err => next(err));
+    },
+
+    deleteInvitationById: (req, res, next) => {
+        return db.Invitations.findOne({
+            where: { id: req.params.invitation_id, UserId: req.user.id }
+        })
+            .then(invitation => {
+                if (invitation) {
+                    return invitation
+                        .destroy()
+                        .then(() =>
+                            res.json({ message: 'Invitation supprimée' })
+                        )
+                        .catch(err => next(err));
+                }
+                throw {
+                    status: 404,
+                    message: "Cette invitation n'existe pas"
+                };
+            })
+            .catch(err => next(err));
+    },
+
     getAll: (req, res, next) => {
         return db.User.findAll({
             where: {

@@ -1,16 +1,8 @@
-const db = require('../models'),
-    { ownerUsername } = require('../serializers/config_serializer');
+const db = require('../models');
 
 module.exports = {
-    getAll: (req, res, next) => {
-        return db.Game.findAll({
-            include: [
-                {
-                    model: db.Config,
-                    ...ownerUsername
-                }
-            ]
-        })
+    getPending: (req, res, next) => {
+        return db.Game.findAll({ where: { published: true, launched: false } })
             .then(games => res.json(games))
             .catch(err => next(err));
     },
@@ -18,21 +10,22 @@ module.exports = {
     create: (req, res, next) => {
         const ip = req.body.ip,
             port = req.body.port,
-            configId = req.body.configId;
+            name = req.body.name,
+            gameMode = req.body.gameMode,
+            AdminId = req.body.AdminId;
 
-        if (ip && port && configId) {
-            return db.Config.findByPk(configId)
-                .then(config => {
-                    if (config) {
-                        return config
-                            .createGame({ ip, port })
+        if (ip && port && name && gameMode && AdminId) {
+            return db.User.findByPk(AdminId)
+                .then(user => {
+                    if (user) {
+                        return user
+                            .createGame({ ip, port, name, gameMode })
                             .then(game => res.json(game))
                             .catch(err => next(err));
                     }
                     throw {
                         status: 404,
-                        message:
-                            'Aucune configuration ne possède cet identifiant'
+                        message: 'Aucun utilisateur ne possède cet identifiant'
                     };
                 })
                 .catch(err => next(err));
@@ -40,20 +33,32 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
-    deleteById: (req, res, next) => {
+    loadById: (req, res, next) => {
         return db.Game.findByPk(req.params.game_id)
             .then(game => {
                 if (game) {
-                    return game
-                        .destroy()
-                        .then(() => res.json({ message: 'Partie supprimée' }))
-                        .catch(err => next(err));
+                    req.game = game;
+                    return next();
                 }
                 throw {
                     status: 404,
                     message: "Cette partie n'existe pas"
                 };
             })
+            .catch(err => next(err));
+    },
+
+    updateById: (req, res, next) => {
+        return req.game
+            .update(req.body)
+            .then(res.json(req.game))
+            .catch(err => next(err));
+    },
+
+    deleteById: (req, res, next) => {
+        return req.game
+            .destroy()
+            .then(() => res.json({ message: 'Partie supprimée' }))
             .catch(err => next(err));
     }
 };
