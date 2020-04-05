@@ -26,7 +26,7 @@ module.exports = [
     {
         url: '/games',
         method: 'get',
-        func: game_ctrl.getAll
+        func: game_ctrl.getPending
     },
 
     /**
@@ -64,6 +64,18 @@ module.exports = [
         url: '/games',
         method: 'post',
         func: game_ctrl.create
+    },
+
+    {
+        url: '/games/:game_id',
+        method: 'use',
+        func: game_ctrl.loadById
+    },
+
+    {
+        url: '/games/:game_id',
+        method: 'put',
+        func: game_ctrl.updateById
     },
 
     /**
