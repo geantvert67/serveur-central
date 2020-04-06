@@ -56,7 +56,14 @@ module.exports = {
 
     getInvitations: (req, res, next) => {
         return req.user
-            .getInvitations({ include: db.Game })
+            .getInvitations({
+                include: [
+                    {
+                        model: db.Game,
+                        where: { ended: false }
+                    }
+                ]
+            })
             .then(invitations => res.json(invitations))
             .catch(err => next(err));
     },
