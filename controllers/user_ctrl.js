@@ -64,7 +64,22 @@ module.exports = {
                     }
                 ]
             })
-            .then(invitations => res.json(invitations))
+            .then(invitations => {
+                const inv = invitations.map(i => i.get({ plain: true }));
+                return res.json(
+                    inv.filter(
+                        i =>
+                            (i.updatedAt >
+                                new Date(
+                                    new Date() - 7 * 24 * 60 * 60 * 1000
+                                ) &&
+                                i.accepted === false) ||
+                            i.accepted === true ||
+                            i.accepted === null
+                    )
+                );
+            })
+
             .catch(err => next(err));
     },
 
