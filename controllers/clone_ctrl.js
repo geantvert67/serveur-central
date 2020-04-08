@@ -50,7 +50,12 @@ createItems = (config, items, next) => {
 module.exports = {
     cloneConfigById: (req, res, next) => {
         return db.Config.findByPk(req.params.config_id, {
-            include: { all: true, nested: true }
+            include: [
+                { model: db.Area },
+                { model: db.Flag },
+                { model: db.ItemModel },
+                { model: db.Item }
+            ]
         })
             .then(c => {
                 if (c) {
