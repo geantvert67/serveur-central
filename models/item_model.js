@@ -54,10 +54,7 @@ module.exports = (sequelize, DataTypes) => {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                validate: {
-                    min: 2,
-                    max: 50
-                }
+                validate: { len: [2, 50] }
             },
             visibilityRadius: {
                 type: DataTypes.DOUBLE,
@@ -105,7 +102,6 @@ module.exports = (sequelize, DataTypes) => {
 
     ItemModel.associate = db => {
         ItemModel.belongsTo(db.Config);
-        ItemModel.hasMany(db.Item, { onDelete: 'CASCADE', hooks: true });
     };
 
     return ItemModel;

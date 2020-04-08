@@ -87,10 +87,7 @@ module.exports = (sequelize, DataTypes) => {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                validate: {
-                    min: 2,
-                    max: 50
-                }
+                validate: { len: [2, 50] }
             },
             isPrivate: {
                 type: DataTypes.BOOLEAN,
@@ -205,6 +202,7 @@ module.exports = (sequelize, DataTypes) => {
         Config.hasMany(db.Area, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.Flag, { onDelete: 'CASCADE', hooks: true });
         Config.hasMany(db.ItemModel, { onDelete: 'CASCADE', hooks: true });
+        Config.hasMany(db.Item, { onDelete: 'CASCADE', hooks: true });
     };
 
     return Config;

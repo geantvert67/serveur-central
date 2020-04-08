@@ -77,47 +77,7 @@ module.exports = [
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/item-models/{item_model_id}/items:
-     *     get:
-     *       summary: Lister tous les items d'un modèle
-     *       tags: [Item]
-     *       security:
-     *         - JWTAuth : []
-     *       parameters:
-     *         - in: path
-     *           name: config_id
-     *           required: true
-     *           schema:
-     *             type: integer
-     *             minimum: 1
-     *           description: Identifiant de la configuration
-     *         - in: path
-     *           name: item_model_id
-     *           required: true
-     *           schema:
-     *             type: integer
-     *             minimum: 1
-     *           description: Identifiant du modèle d'item
-     *       responses:
-     *         "200":
-     *            description: Items récupérés
-     *            content:
-     *              application/json:
-     *                schema:
-     *                  type: array
-     *                  items:
-     *                    $ref: '#/components/serializers/Item'
-     */
-    {
-        url: '/configs/:config_id/item-models/:item_model_id/items',
-        method: 'get',
-        func: item_ctrl.getAll
-    },
-
-    /**
-     * @swagger
-     * path:
-     *   /configs/{config_id}/item-models/{item_model_id}/items:
+     *   /configs/{config_id}/items:
      *     post:
      *       summary: Créer un item
      *       tags: [Item]
@@ -165,57 +125,13 @@ module.exports = [
      *           description: Paramètres invalides
      */
     {
-        url: '/configs/:config_id/item-models/:item_model_id/items',
+        url: '/configs/:config_id/items',
         method: 'post',
         func: item_ctrl.create
     },
 
-    /**
-     * @swagger
-     * path:
-     *   /configs/{config_id}/item-models/{item_model_id}/items:
-     *     delete:
-     *       summary: Supprimer tous les items d'un modèle d'item
-     *       tags: [Item]
-     *       security:
-     *         - JWTAuth : []
-     *       parameters:
-     *         - in: path
-     *           name: config_id
-     *           required: true
-     *           schema:
-     *             type: integer
-     *             minimum: 1
-     *           description: Identifiant de la configuration
-     *         - in: path
-     *           name: item_model_id
-     *           required: true
-     *           schema:
-     *             type: integer
-     *             minimum: 1
-     *           description: Identifiant du modèle d'item
-     *       responses:
-     *         "200":
-     *           description: Items supprimés
-     *           content:
-     *             application/json:
-     *               schema:
-     *                 type: object
-     *                 properties:
-     *                   message:
-     *                     type: string
-     *                     example: Items supprimés
-     *         "404":
-     *           description: Modèle d'item inexistant
-     */
     {
-        url: '/configs/:config_id/item-models/:item_model_id/items',
-        method: 'delete',
-        func: item_ctrl.deleteAll
-    },
-
-    {
-        url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
+        url: '/configs/:config_id/items/:item_id',
         method: 'use',
         func: item_ctrl.loadById
     },
@@ -223,7 +139,7 @@ module.exports = [
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/item-models/{item_model_id}/items/{item_id}:
+     *   /configs/{config_id}/items/{item_id}:
      *     put:
      *       summary: Modifier un item
      *       tags: [Item]
@@ -278,7 +194,7 @@ module.exports = [
      *           description: Item inexistant
      */
     {
-        url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
+        url: '/configs/:config_id/items/:item_id',
         method: 'put',
         func: item_ctrl.updateById
     },
@@ -286,7 +202,7 @@ module.exports = [
     /**
      * @swagger
      * path:
-     *   /configs/{config_id}/item-models/{item_model_id}/items/{item_id}:
+     *   /configs/{config_id}/items/{item_id}:
      *     delete:
      *       summary: Supprimer un item
      *       tags: [Item]
@@ -329,7 +245,7 @@ module.exports = [
      *           description: Item inexistant
      */
     {
-        url: '/configs/:config_id/item-models/:item_model_id/items/:item_id',
+        url: '/configs/:config_id/items/:item_id',
         method: 'delete',
         func: item_ctrl.deleteById
     }

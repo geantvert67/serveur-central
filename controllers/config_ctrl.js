@@ -88,7 +88,14 @@ const _this = (module.exports = {
 
     exportById: (req, res, next) => {
         return db.Config.findByPk(req.params.config_id, {
-            include: { all: true, nested: true }
+            include: [
+                { model: db.User, as: 'Owner' },
+                { model: db.Area },
+                { model: db.Flag },
+                { model: db.Team, include: db.User },
+                { model: db.ItemModel },
+                { model: db.Item }
+            ]
         })
             .then(config => {
                 if (config) {

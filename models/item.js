@@ -33,6 +33,41 @@ module.exports = (sequelize, DataTypes) => {
 
     Item.init(
         {
+            name: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: { len: [2, 50] }
+            },
+            visibilityRadius: {
+                type: DataTypes.DOUBLE,
+                validate: {
+                    min: 0.01
+                }
+            },
+            actionRadius: {
+                type: DataTypes.DOUBLE,
+                validate: {
+                    min: 0.01,
+                    actionGreaterThanVisibility(value) {
+                        if (value > this.flagVisibilityRadius) {
+                            throw new Error(
+                                "Le rayon d'action doit être inférieur ou égal au rayon de visibilité"
+                            );
+                        }
+                    }
+                }
+            },
+            waitingPeriod: {
+                type: DataTypes.INTEGER,
+                validate: {
+                    min: 1,
+                    max: 31536000
+                }
+            },
+            autoMove: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
             quantity: {
                 type: DataTypes.INTEGER,
                 defaultValue: 1,
@@ -54,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Item.associate = db => {
-        Item.belongsTo(db.ItemModel);
+        Item.belongsTo(db.Config);
     };
 
     return Item;

@@ -28,19 +28,20 @@ createItemModels = (config, itemModels, next) => {
                 actionRadius: itemModel.actionRadius,
                 autoMove: itemModel.autoMove
             })
-            .then(im => {
-                return createItems(im, itemModel.Items, next);
-            })
             .catch(err => next(err));
     });
 };
 
-createItems = (itemModel, items, next) => {
+createItems = (config, items, next) => {
     return items.map(item => {
-        return itemModel
+        return config
             .createItem({
                 position: item.position,
-                quantity: item.quantity
+                quantity: item.quantity,
+                name: item.name,
+                visibilityRadius: item.visibilityRadius,
+                actionRadius: item.actionRadius,
+                autoMove: item.autoMove
             })
             .catch(err => next(err));
     });
@@ -49,7 +50,12 @@ createItems = (itemModel, items, next) => {
 module.exports = {
     cloneConfigById: (req, res, next) => {
         return db.Config.findByPk(req.params.config_id, {
-            include: { all: true, nested: true }
+            include: [
+                { model: db.Area },
+                { model: db.Flag },
+                { model: db.ItemModel },
+                { model: db.Item }
+            ]
         })
             .then(c => {
                 if (c) {
@@ -71,7 +77,8 @@ module.exports = {
                             return Promise.all([
                                 createAreas(config, c.Areas, next),
                                 createFlags(config, c.Flags, next),
-                                createItemModels(config, c.ItemModels, next)
+                                createItemModels(config, c.ItemModels, next),
+                                createItems(config, c.Items, next)
                             ])
                                 .then(() => res.json(config))
                                 .catch(err => next(err));
