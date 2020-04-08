@@ -2,27 +2,15 @@ const db = require('../models');
 
 module.exports = {
     getAllFromConfig: (req, res, next) => {
-        return db.Item.findAll({
-            include: [
-                {
-                    model: db.ItemModel,
-                    where: { ConfigId: req.params.config_id }
-                }
-            ]
-        })
+        return req.config
+            .getItems()
             .then(items => res.json(items))
             .catch(err => next(err));
     },
 
     deleteAllFromConfig: (req, res, next) => {
-        return db.Item.findAll({
-            include: [
-                {
-                    model: db.ItemModel,
-                    where: { ConfigId: req.params.config_id }
-                }
-            ]
-        })
+        return req.config
+            .getItems()
             .then(items => {
                 return Promise.all(items.map(i => i.destroy()))
                     .then(() => res.json({ message: 'Items supprimés' }))
@@ -31,22 +19,14 @@ module.exports = {
             .catch(err => next(err));
     },
 
-    getAll: (req, res, next) => {
-        return req.itemModel
-            .getItems()
-            .then(items => res.json(items))
-            .catch(err => next(err));
-    },
-
     create: (req, res, next) => {
-        const coordinates = req.body.coordinates,
-            quantity = req.body.quantity;
+        const coordinates = req.body.coordinates;
 
         if (coordinates) {
-            return req.itemModel
+            return req.config
                 .createItem({
-                    position: { type: 'Point', coordinates },
-                    quantity
+                    ...{ position: { type: 'Point', coordinates } },
+                    ...req.body
                 })
                 .then(item => res.json(item))
                 .catch(err => next(err));
@@ -54,22 +34,11 @@ module.exports = {
         throw { status: 406, message: 'Paramètres invalides' };
     },
 
-    deleteAll: (req, res, next) => {
-        return req.itemModel
-            .getItems()
-            .then(items => {
-                return Promise.all(items.map(i => i.destroy()))
-                    .then(() => res.json({ message: 'Items supprimés' }))
-                    .catch(err => next(err));
-            })
-            .catch(err => next(err));
-    },
-
     loadById: (req, res, next) => {
         return db.Item.findOne({
             where: {
                 id: req.params.item_id,
-                itemModelId: req.params.item_model_id
+                ConfigId: req.params.config_id
             }
         })
             .then(item => {

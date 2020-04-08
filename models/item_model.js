@@ -102,7 +102,6 @@ module.exports = (sequelize, DataTypes) => {
 
     ItemModel.associate = db => {
         ItemModel.belongsTo(db.Config);
-        ItemModel.hasMany(db.Item, { onDelete: 'CASCADE', hooks: true });
     };
 
     return ItemModel;
