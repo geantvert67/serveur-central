@@ -68,6 +68,19 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
             },
+            effectDuration: {
+                type: DataTypes.INTEGER,
+                validate: {
+                    min: 1,
+                    max: 31536000
+                }
+            },
+            effectStrength: {
+                type: DataTypes.DOUBLE,
+                validate: {
+                    min: 0.01
+                }
+            },
             quantity: {
                 type: DataTypes.INTEGER,
                 defaultValue: 1,
