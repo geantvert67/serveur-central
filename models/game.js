@@ -74,6 +74,9 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 defaultValue: false
             },
+            willLaunchAt: {
+                type: DataTypes.DATE
+            },
             ended: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
