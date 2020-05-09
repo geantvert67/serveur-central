@@ -38,6 +38,20 @@ module.exports = (sequelize, DataTypes) => {
         verifyPassword(password) {
             return bcrypt.compareSync(password, this.password);
         }
+
+        addStatistics(gameMode, stats) {
+            this.Statistic.increment({
+                nbWins: stats.hasWon ? 1 : 0,
+                nbLosses: stats.hasLost ? 1 : 0,
+                nbGames: 1,
+                nbFlags: stats.nbFlags,
+                nbDiscoveredFlags: stats.nbDiscoveredFlags,
+                nbTraps: stats.nbTraps,
+                scoreFlag: gameMode === 'FLAG' ? stats.score : 0,
+                scoreTime: gameMode === 'TIME' ? stats.score : 0,
+                scoreSupremacy: gameMode === 'SUPREMACY' ? stats.score : 0
+            });
+        }
     }
 
     User.init(
