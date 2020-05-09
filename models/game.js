@@ -103,6 +103,7 @@ module.exports = (sequelize, DataTypes) => {
     Game.associate = db => {
         Game.belongsTo(db.User, { as: 'Admin' });
         Game.hasMany(db.Invitations);
+        Game.hasMany(db.History);
     };
 
     return Game;

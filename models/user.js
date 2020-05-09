@@ -79,6 +79,7 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(db.Game, { foreignKey: 'AdminId' });
         User.hasMany(db.Invitations);
         User.hasOne(db.Statistics);
+        User.hasMany(db.History);
     };
 
     return User;
