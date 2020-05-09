@@ -69,11 +69,16 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
+    User.afterCreate(async (user, options) => {
+        await user.createStatistic();
+    });
+
     User.associate = db => {
         User.hasMany(db.Config, { foreignKey: 'OwnerId' });
         User.belongsToMany(db.Team, { through: 'TeamPlayers' });
         User.hasMany(db.Game, { foreignKey: 'AdminId' });
         User.hasMany(db.Invitations);
+        User.hasOne(db.Statistics);
     };
 
     return User;
