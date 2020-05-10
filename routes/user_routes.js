@@ -159,5 +159,11 @@ module.exports = [
         url: '/users',
         method: 'get',
         func: user_ctrl.getAll
+    },
+
+    {
+        url: '/users/:user_id/statistics',
+        method: 'get',
+        func: user_ctrl.getByIdWithStats
     }
 ];

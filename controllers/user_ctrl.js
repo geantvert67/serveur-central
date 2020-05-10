@@ -114,5 +114,19 @@ module.exports = {
         })
             .then(users => res.json(users))
             .catch(err => next(err));
+    },
+
+    getByIdWithStats: (req, res, next) => {
+        return db.User.findByPk(req.params.user_id, {
+            include: [{ model: db.Statistics }]
+        })
+            .then(user => {
+                if (user) res.json(user);
+                throw {
+                    status: 404,
+                    message: 'Aucune configuration ne possède cet identifiant'
+                };
+            })
+            .catch(err => next(err));
     }
 };
