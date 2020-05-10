@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
         }
 
         addStatistics(gameMode, stats) {
-            this.Statistic.increment({
+            this.Statistics.increment({
                 nbWins: stats.hasWon ? 1 : 0,
                 nbLosses: stats.hasLost ? 1 : 0,
                 nbGames: 1,

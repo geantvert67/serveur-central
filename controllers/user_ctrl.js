@@ -128,5 +128,32 @@ module.exports = {
                 };
             })
             .catch(err => next(err));
+    },
+
+    getLeaderboard: (req, res, next) => {
+        let field = '';
+
+        switch (req.query.filter) {
+            case 'SUPREMACY':
+                field = 'scoreSupremacy';
+                break;
+            case 'FLAG':
+                field = 'scoreFlag';
+                break;
+            case 'TIME':
+                field = 'scoreTime';
+                break;
+            case 'Victoires':
+                field = 'nbWins';
+                break;
+        }
+
+        return db.User.findAll({
+            include: [{ model: db.Statistics }],
+            order: [['Statistic', field, 'DESC'], ['username']],
+            limit: 25
+        })
+            .then(users => res.json(users))
+            .catch(err => next(err));
     }
 };
