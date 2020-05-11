@@ -104,6 +104,16 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    getHistory: (req, res, next) => {
+        return req.user
+            .getHistories({
+                include: [{ model: db.Game, attributes: ['name', 'gameMode'] }],
+                order: [['createdAt', 'DESC']]
+            })
+            .then(history => res.json(history))
+            .catch(err => next(err));
+    },
+
     getAll: (req, res, next) => {
         return db.User.findAll({
             where: {

@@ -129,6 +129,12 @@ module.exports = [
         func: user_ctrl.deleteInvitationById
     },
 
+    {
+        url: '/user/history',
+        method: 'get',
+        func: user_ctrl.getHistory
+    },
+
     /**
      * @swagger
      * path:
