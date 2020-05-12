@@ -1,5 +1,6 @@
 const db = require('../models'),
-    { Op } = require('sequelize');
+    { Op } = require('sequelize'),
+    { paginate } = require('../utils');
 
 module.exports = {
     getCurrent: (req, res, next) => {
@@ -104,6 +105,26 @@ module.exports = {
             .catch(err => next(err));
     },
 
+    getHistory: (req, res, next) => {
+        const filter = {};
+        if (req.query.date) {
+            filter.createdAt = { [Op.gte]: new Date(req.query.date) };
+        }
+
+        return req.user
+            .getHistories({
+                include: [{ model: db.Game, attributes: ['name', 'gameMode'] }],
+                order: [['createdAt', 'DESC']],
+                where: filter,
+                ...paginate(
+                    parseInt(req.query.page),
+                    parseInt(req.query.pageSize)
+                )
+            })
+            .then(history => res.json(history))
+            .catch(err => next(err));
+    },
+
     getAll: (req, res, next) => {
         return db.User.findAll({
             where: {
@@ -111,6 +132,47 @@ module.exports = {
             },
             order: ['username'],
             limit: 5
+        })
+            .then(users => res.json(users))
+            .catch(err => next(err));
+    },
+
+    getByIdWithStats: (req, res, next) => {
+        return db.User.findByPk(req.params.user_id, {
+            include: [{ model: db.Statistics }]
+        })
+            .then(user => {
+                if (user) return res.json(user);
+                throw {
+                    status: 404,
+                    message: 'Aucune configuration ne possède cet identifiant'
+                };
+            })
+            .catch(err => next(err));
+    },
+
+    getLeaderboard: (req, res, next) => {
+        let field = '';
+
+        switch (req.query.filter) {
+            case 'SUPREMACY':
+                field = 'scoreSupremacy';
+                break;
+            case 'FLAG':
+                field = 'scoreFlag';
+                break;
+            case 'TIME':
+                field = 'scoreTime';
+                break;
+            case 'Victoires':
+                field = 'nbWins';
+                break;
+        }
+
+        return db.User.findAll({
+            include: [{ model: db.Statistics }],
+            order: [['Statistic', field, 'DESC'], ['username']],
+            limit: 25
         })
             .then(users => res.json(users))
             .catch(err => next(err));

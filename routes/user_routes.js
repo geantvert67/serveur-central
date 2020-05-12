@@ -129,6 +129,12 @@ module.exports = [
         func: user_ctrl.deleteInvitationById
     },
 
+    {
+        url: '/user/history',
+        method: 'get',
+        func: user_ctrl.getHistory
+    },
+
     /**
      * @swagger
      * path:
@@ -159,5 +165,17 @@ module.exports = [
         url: '/users',
         method: 'get',
         func: user_ctrl.getAll
+    },
+
+    {
+        url: '/users/:user_id/statistics',
+        method: 'get',
+        func: user_ctrl.getByIdWithStats
+    },
+
+    {
+        url: '/leaderboard',
+        method: 'get',
+        func: user_ctrl.getLeaderboard
     }
 ];
