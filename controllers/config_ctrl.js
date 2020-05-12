@@ -2,11 +2,21 @@ const fs = require('fs'),
     { Op } = require('sequelize'),
     AdmZip = require('adm-zip'),
     db = require('../models'),
-    { paginate } = require('../utils'),
-    {
-        basicDetails,
-        ownerUsername
-    } = require('../serializers/config_serializer');
+    { paginate } = require('../utils');
+
+const basicDetails = {
+    attributes: ['id', 'name', 'gameMode', 'isPrivate', 'createdAt']
+};
+
+const ownerUsername = {
+    include: [
+        {
+            model: db.User,
+            as: 'Owner',
+            attributes: ['username']
+        }
+    ]
+};
 
 const _this = (module.exports = {
     getAll: (req, res, next) => {
