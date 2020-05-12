@@ -23,5 +23,17 @@ module.exports = {
                 };
             })
             .catch(err => next(err));
+    },
+
+    getByGameId: (req, res, next) => {
+        return req.game
+            .getHistories({
+                include: [
+                    { model: db.User, attributes: ['username'] },
+                    { model: db.Game, attributes: ['name', 'gameMode'] }
+                ]
+            })
+            .then(histories => res.json(histories))
+            .catch(err => next(err));
     }
 };
