@@ -1,5 +1,6 @@
 const db = require('../models'),
-    { Op } = require('sequelize');
+    { Op } = require('sequelize'),
+    { paginate } = require('../utils');
 
 module.exports = {
     getCurrent: (req, res, next) => {
@@ -105,10 +106,20 @@ module.exports = {
     },
 
     getHistory: (req, res, next) => {
+        const filter = {};
+        if (req.query.date) {
+            filter.createdAt = { [Op.gte]: new Date(req.query.date) };
+        }
+
         return req.user
             .getHistories({
                 include: [{ model: db.Game, attributes: ['name', 'gameMode'] }],
-                order: [['createdAt', 'DESC']]
+                order: [['createdAt', 'DESC']],
+                where: filter,
+                ...paginate(
+                    parseInt(req.query.page),
+                    parseInt(req.query.pageSize)
+                )
             })
             .then(history => res.json(history))
             .catch(err => next(err));
