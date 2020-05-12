@@ -142,7 +142,7 @@ module.exports = {
             include: [{ model: db.Statistics }]
         })
             .then(user => {
-                if (user) res.json(user);
+                if (user) return res.json(user);
                 throw {
                     status: 404,
                     message: 'Aucune configuration ne possède cet identifiant'

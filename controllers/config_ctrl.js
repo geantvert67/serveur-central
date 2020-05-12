@@ -1,6 +1,8 @@
 const fs = require('fs'),
+    { Op } = require('sequelize'),
     AdmZip = require('adm-zip'),
     db = require('../models'),
+    { paginate } = require('../utils'),
     {
         basicDetails,
         ownerUsername
@@ -10,8 +12,16 @@ const _this = (module.exports = {
     getAll: (req, res, next) => {
         return db.Config.scope('public')
             .findAll({
+                where: {
+                    name: { [Op.like]: `${req.query.name}%` },
+                    gameMode: { [Op.in]: req.query.gameModes.split(',') }
+                },
                 ...basicDetails,
-                ...ownerUsername
+                ...ownerUsername,
+                ...paginate(
+                    parseInt(req.query.page),
+                    parseInt(req.query.pageSize)
+                )
             })
             .then(configs => res.json(configs))
             .catch(err => next(err));
@@ -128,7 +138,17 @@ const _this = (module.exports = {
 
     getByOwner: (req, res, next) => {
         return req.user
-            .getConfigs(basicDetails)
+            .getConfigs({
+                where: {
+                    name: { [Op.like]: `${req.query.name}%` },
+                    gameMode: { [Op.in]: req.query.gameModes.split(',') }
+                },
+                ...basicDetails,
+                ...paginate(
+                    parseInt(req.query.page),
+                    parseInt(req.query.pageSize)
+                )
+            })
             .then(configs => res.json(configs))
             .catch(err => next(err));
     }
