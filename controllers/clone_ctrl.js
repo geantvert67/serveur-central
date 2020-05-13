@@ -26,7 +26,10 @@ createItemModels = (config, itemModels, next) => {
                 name: itemModel.name,
                 visibilityRadius: itemModel.visibilityRadius,
                 actionRadius: itemModel.actionRadius,
-                autoMove: itemModel.autoMove
+                autoMove: itemModel.autoMove,
+                waitingPeriod: itemModel.waitingPeriod,
+                effectStrength: itemModel.effectStrength,
+                effectDuration: itemModel.effectDuration
             })
             .catch(err => next(err));
     });
@@ -41,7 +44,10 @@ createItems = (config, items, next) => {
                 name: item.name,
                 visibilityRadius: item.visibilityRadius,
                 actionRadius: item.actionRadius,
-                autoMove: item.autoMove
+                autoMove: item.autoMove,
+                waitingPeriod: item.waitingPeriod,
+                effectStrength: item.effectStrength,
+                effectDuration: item.effectDuration
             })
             .catch(err => next(err));
     });
