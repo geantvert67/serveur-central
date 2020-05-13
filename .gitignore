@@ -1,6 +1,5 @@
 # Archive with config
 public/*.zip
-public/*.json
 
 # Logs
 logs
