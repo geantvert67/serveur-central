@@ -119,24 +119,22 @@ const _this = (module.exports = {
         })
             .then(config => {
                 if (config) {
-                    return fs.writeFile('public/config.json', '', err => {
-                        if (err) next(err);
-                        return fs.appendFile(
-                            'public/config.json',
-                            JSON.stringify(config.get({ plain: true })),
-                            err => {
-                                if (err) next(err);
+                    return fs.writeFile(
+                        'public/installer/config/config.json',
+                        JSON.stringify(config.get({ plain: true })),
+                        { flag: 'w' },
+                        err => {
+                            if (err) next(err);
 
-                                const zip = new AdmZip();
-                                zip.addLocalFile('public/config.json');
-                                zip.writeZip('public/installer.zip');
+                            const zip = new AdmZip();
+                            zip.addLocalFolder('public/installer');
+                            zip.writeZip('public/crystalz.zip');
 
-                                return res.sendFile('installer.zip', {
-                                    root: 'public'
-                                });
-                            }
-                        );
-                    });
+                            return res.sendFile('crystalz.zip', {
+                                root: 'public'
+                            });
+                        }
+                    );
                 }
                 throw {
                     status: 404,
