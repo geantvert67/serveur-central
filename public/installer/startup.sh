@@ -10,6 +10,8 @@ check_port(){
     done
 }
 
+cp  ~/.ssh/id_rsa $(pwd)/config
+
 #------------------ Trouve 2 port non utilisé un pour le serveur de jeu et un pour le client web maitre --------------------
 export port_react=3000
 
