@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
      *           type: boolean
      *           default: false
      *           description: Si la partie a déjà commencé
+     *         willLaunchAt:
+     *           type: string
+     *           format: date-time
+     *           description: Date à laquelle une partie planifiée va se lancer
      *         ended:
      *           type: boolean
      *           default: false

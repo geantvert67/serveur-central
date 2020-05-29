@@ -12,6 +12,32 @@ components:
                 port:
                     type: integer
                     example: 8081
+                name:
+                    type: string
+                    minLength: 2
+                    maxLength: 50
+                    example: config 1
+                gameMode:
+                    type: string
+                    in: query
+                    enum: ['FLAG', 'TIME', 'SUPREMACY']
+                    example: SUPREMACY
+                published:
+                    type: boolean
+                    default: false
+                    example: false
+                launched:
+                    type: boolean
+                    default: false
+                    example: false
+                willLaunchAt:
+                    type: string
+                    format: date-time
+                    example: null
+                ended:
+                    type: boolean
+                    default: false
+                    example: false
                 ConfigId:
                     type: integer
                     example: 1
@@ -29,6 +55,32 @@ components:
                 port:
                     type: integer
                     example: 8081
+                name:
+                    type: string
+                    minLength: 2
+                    maxLength: 50
+                    example: config 1
+                gameMode:
+                    type: string
+                    in: query
+                    enum: ['FLAG', 'TIME', 'SUPREMACY']
+                    example: SUPREMACY
+                published:
+                    type: boolean
+                    default: false
+                    example: false
+                launched:
+                    type: boolean
+                    default: false
+                    example: false
+                willLaunchAt:
+                    type: string
+                    format: date-time
+                    example: null
+                ended:
+                    type: boolean
+                    default: false
+                    example: false
                 ConfigId:
                     type: integer
                     example: 1

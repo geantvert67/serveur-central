@@ -41,17 +41,7 @@ module.exports = [
      *        content:
      *          application/json:
      *            schema:
-     *              type: object
-     *              properties:
-     *                ip:
-     *                  type: string
-     *                  example: 127.0.0.1
-     *                port:
-     *                  type: integer
-     *                  example: 8081
-     *                configId:
-     *                  type: integer
-     *                  example: 1
+     *              $ref: '#/components/schemas/Game'
      *       responses:
      *         "200":
      *            description: Partie créée
@@ -72,6 +62,37 @@ module.exports = [
         func: game_ctrl.loadById
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /games/{gameId}:
+     *     put:
+     *       summary: Modifier une partie à partir de son identifiant
+     *       tags: [Game]
+     *       parameters:
+     *         - in: path
+     *           name: game_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la partie
+     *       requestBody:
+     *        required: true
+     *        content:
+     *          application/json:
+     *            schema:
+     *              $ref: '#/components/schemas/Game'
+     *       responses:
+     *         "200":
+     *           description: Partie modifiée
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 $ref: '#/components/serializers/CreatedGame'
+     *         "404":
+     *           description: Partie inexistante
+     */
     {
         url: '/games/:game_id',
         method: 'put',
