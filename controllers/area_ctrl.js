@@ -1,6 +1,6 @@
 const db = require('../models');
 
-_create = (req, res, next) => {
+const _create = (req, res, next) => {
     return req.config
         .createArea({
             position: {

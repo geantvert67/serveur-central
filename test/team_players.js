@@ -1,6 +1,5 @@
 const chai = require('chai'),
     chaiHTTP = require('chai-http'),
-    should = chai.should(),
     app = require('../api'),
     jwt = require('jsonwebtoken'),
     db = require('../models'),
@@ -65,7 +64,7 @@ describe("Membre d'une équipe", () => {
                 .post(`/configs/${configId}/teams/${teamId}/users`)
                 .set('Authorization', `Bearer ${token}`)
                 .send({ username: 'louis' })
-                .end((err, res) => {
+                .end(() => {
                     chai.request(app)
                         .post(`/configs/${configId}/teams/${teamId}/users`)
                         .set('Authorization', `Bearer ${token}`)

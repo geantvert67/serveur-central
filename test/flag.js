@@ -1,6 +1,5 @@
 const chai = require('chai'),
     chaiHTTP = require('chai-http'),
-    should = chai.should(),
     app = require('../api'),
     jwt = require('jsonwebtoken'),
     db = require('../models'),
@@ -12,11 +11,8 @@ let configId = 0;
 
 describe('Drapeau', () => {
     before(() => {
-        let user = null;
-
         return Promise.all([
             db.User.findOne({ where: { username: 'thomas' } }).then(u => {
-                user = u;
                 token = jwt.sign({ id: u.id }, secret, {
                     expiresIn: '1m'
                 });
@@ -78,7 +74,7 @@ describe('Drapeau', () => {
                     .end((err, res) => {
                         res.should.have.status(200);
                         res.body.should.be.a('object');
-                        res.body.position.coordinates[0].should.be.equal(40.0)
+                        res.body.position.coordinates[0].should.be.equal(40.0);
                         done();
                     });
             });

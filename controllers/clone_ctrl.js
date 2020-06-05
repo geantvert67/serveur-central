@@ -1,6 +1,6 @@
 const db = require('../models');
 
-createAreas = (config, areas, next) => {
+const createAreas = (config, areas, next) => {
     return areas.map(area => {
         return config
             .createArea({
@@ -11,7 +11,7 @@ createAreas = (config, areas, next) => {
     });
 };
 
-createFlags = (config, flags, next) => {
+const createFlags = (config, flags, next) => {
     return flags.map(flag => {
         return config
             .createFlag({ position: flag.position })
@@ -19,7 +19,7 @@ createFlags = (config, flags, next) => {
     });
 };
 
-createItemModels = (config, itemModels, next) => {
+const createItemModels = (config, itemModels, next) => {
     return itemModels.map(itemModel => {
         return config
             .createItemModel({
@@ -35,7 +35,7 @@ createItemModels = (config, itemModels, next) => {
     });
 };
 
-createItems = (config, items, next) => {
+const createItems = (config, items, next) => {
     return items.map(item => {
         return config
             .createItem({
