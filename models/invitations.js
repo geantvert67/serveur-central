@@ -7,12 +7,14 @@ module.exports = (sequelize, DataTypes) => {
      * @swagger
      * components:
      *   schemas:
-     *     Invitations:
+     *     Invitation:
      *       type: object
      *       properties:
      *         accepted:
      *           type: boolean
      *           description: Si l'invitation a été acceptée ou non
+     *       example:
+     *         accepted: true
      */
     Invitations.init(
         {

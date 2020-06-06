@@ -1,0 +1,26 @@
+components:
+    serializers:
+        Invitation:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                accepted:
+                    type: boolean
+                    example: true
+                UserId:
+                    type: integer
+                    example: 1
+                GameId:
+                    type: integer
+                    example: 1
+        NewInvitation:
+            type: object
+            properties:
+                accepted:
+                    type: boolean
+                    example: true
+                userId:
+                    type: integer
+                    example: 1
