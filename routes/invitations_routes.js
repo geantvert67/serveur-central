@@ -29,7 +29,7 @@ module.exports = [
      *                schema:
      *                  type: array
      *                  items:
-     *                    $ref: '#/components/serializers/Invitation'
+     *                    $ref: '#/components/serializers/InvitationWithUser'
      */
     {
         url: '/games/:game_id/invitations',
@@ -86,7 +86,7 @@ module.exports = [
      * @swagger
      * path:
      *   /games/{game_id}/invitations/{invitation_id}:
-     *     post:
+     *     put:
      *       summary: Modifier un demande à rejoindre une partie
      *       tags: [Invitation]
      *       parameters:

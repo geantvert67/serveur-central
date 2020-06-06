@@ -24,3 +24,40 @@ components:
                         username:
                             type: string
                             example: clement284
+        UserWithStats:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                username:
+                    type: string
+                    example: clement284
+                Statistic:
+                    type: object
+                    properties:
+                        nbGames:
+                            type: integer
+                            example: 5
+                        nbWins:
+                            type: integer
+                            example: 2
+                        nbLosses:
+                            type: integer
+                            example: 1
+                        nbFlags:
+                            type: integer
+                            example: 5
+                        nbDiscoveredFlags:
+                            type: integer
+                            example: 1
+                        nbTraps: 0
+                        scoreFlag:
+                            type: integer
+                            example: 1
+                        scoreTime:
+                            type: integer
+                            example: 234
+                        scoreSupremacy:
+                            type: integer
+                            example: 3
