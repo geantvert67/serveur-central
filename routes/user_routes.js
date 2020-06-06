@@ -117,18 +117,105 @@ module.exports = [
         func: user_ctrl.updatePassword
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /user/invitations:
+     *     get:
+     *       summary: Lister ses demandes à rejoindre une partie
+     *       tags: [Invitation]
+     *       security:
+     *         - JWTAuth: []
+     *       responses:
+     *         "200":
+     *            description: Demandes récupérées
+     *            content:
+     *              application/json:
+     *                schema:
+     *                  type: array
+     *                  items:
+     *                    $ref: '#/components/serializers/InvitationWithGame'
+     */
     {
         url: '/user/invitations',
         method: 'get',
         func: user_ctrl.getInvitations
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /user/invitations/{invitation_id}:
+     *     delete:
+     *       summary: Supprimer une de ses demande à rejoindre une partie
+     *       tags: [Invitation]
+     *       security:
+     *         - JWTAuth: []
+     *       parameters:
+     *         - in: path
+     *           name: invitation_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de la demande
+     *       responses:
+     *         "200":
+     *            description: Demande supprimée
+     *            content:
+     *             application/json:
+     *               schema:
+     *                 type: object
+     *                 properties:
+     *                   message:
+     *                     type: string
+     *                     example: Demande supprimée
+     *         "404":
+     *           description: Demande inexistante
+     */
     {
         url: '/user/invitations/:invitation_id',
         method: 'delete',
         func: user_ctrl.deleteInvitationById
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /user/history:
+     *     get:
+     *       summary: Lister tous ses historiques de partie
+     *       tags: [History]
+     *       parameters:
+     *         - in: query
+     *           name: date
+     *           schema:
+     *             type: string
+     *             format: date
+     *           description:
+     *             Date jusqu'à laquelle on veur afficher l'historique
+     *         - in: query
+     *           name: page
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Numéro de la page dans la pagination
+     *         - in: query
+     *           name: pageSize
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Nombre d'éléments à afficher par page dans la pagination
+     *       responses:
+     *         "200":
+     *            description: Historiques récupérés
+     *            content:
+     *              application/json:
+     *                schema:
+     *                  type: array
+     *                  items:
+     *                    $ref: '#/components/serializers/History'
+     */
     {
         url: '/user/history',
         method: 'get',
@@ -167,12 +254,63 @@ module.exports = [
         func: user_ctrl.getAll
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /users/{user_id}/statistics:
+     *     get:
+     *       summary: Récupérer les statistiques d'un utilisateur
+     *       tags: [User]
+     *       security:
+     *         - JWTAuth: []
+     *       parameters:
+     *         - in: path
+     *           name: user_id
+     *           required: true
+     *           schema:
+     *             type: integer
+     *             minimum: 1
+     *           description: Identifiant de l'utilisateur
+     *       responses:
+     *         "200":
+     *           description: Statistiques récupérées
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 $ref: '#/components/serializers/UserWithStats'
+     */
     {
         url: '/users/:user_id/statistics',
         method: 'get',
         func: user_ctrl.getByIdWithStats
     },
 
+    /**
+     * @swagger
+     * path:
+     *   /leaderboard:
+     *     get:
+     *       summary: Récupérer les 25 meilleurs joueurs
+     *       tags: [User]
+     *       security:
+     *         - JWTAuth: []
+     *       parameters:
+     *         - in: query
+     *           name: filter
+     *           schema:
+     *             type: string
+     *           description:
+     *             Le filtre pour classer les joueurs
+     *       responses:
+     *         "200":
+     *           description: Joueurs récupérés
+     *           content:
+     *             application/json:
+     *               schema:
+     *                 type: array
+     *                 items:
+     *                   $ref: '#/components/serializers/UserWithStats'
+     */
     {
         url: '/leaderboard',
         method: 'get',

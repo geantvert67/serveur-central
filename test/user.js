@@ -1,6 +1,5 @@
 const chai = require('chai'),
     chaiHTTP = require('chai-http'),
-    should = chai.should(),
     app = require('../api'),
     jwt = require('jsonwebtoken'),
     db = require('../models'),

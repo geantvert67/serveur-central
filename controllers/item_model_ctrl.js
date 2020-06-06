@@ -1,6 +1,6 @@
 const db = require('../models');
 
-_updateById = (req, res, next) => {
+const _updateById = (req, res, next) => {
     return req.itemModel
         .update(req.body)
         .then(itemModel => res.json(itemModel))

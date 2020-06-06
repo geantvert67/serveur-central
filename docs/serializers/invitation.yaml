@@ -1,0 +1,60 @@
+components:
+    serializers:
+        Invitation:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                accepted:
+                    type: boolean
+                    example: true
+                UserId:
+                    type: integer
+                    example: 1
+                GameId:
+                    type: integer
+                    example: 1
+        InvitationWithUser:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                accepted:
+                    type: boolean
+                    example: true
+                UserId:
+                    type: integer
+                    example: 1
+                GameId:
+                    type: integer
+                    example: 1
+                User:
+                    $ref: '#/components/serializers/UserWithoutPassword'
+        InvitationWithGame:
+            type: object
+            properties:
+                id:
+                    type: integer
+                    example: 1
+                accepted:
+                    type: boolean
+                    example: true
+                UserId:
+                    type: integer
+                    example: 1
+                GameId:
+                    type: integer
+                    example: 1
+                Game:
+                    $ref: '#/components/serializers/CreatedGame'
+        NewInvitation:
+            type: object
+            properties:
+                accepted:
+                    type: boolean
+                    example: true
+                userId:
+                    type: integer
+                    example: 1

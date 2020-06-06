@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
      *           type: boolean
      *           default: false
      *           description: Si l'item va se téléporter aléatoirement à chaque fois qu'un joueur en ramasse.
+     *         effectDuration:
+     *           type: integer
+     *           minimum: 1
+     *           maximum: 31536000
+     *           description: Durée de l'effet de l'item.
+     *         effectStrength:
+     *           type: number
+     *           format: double
+     *           minimum: 0.1
+     *           description: Impact de l'item sur le rayon de visibilité.
      *       example:
      *         name: Mine
      *         visibilityRadius: 1.5

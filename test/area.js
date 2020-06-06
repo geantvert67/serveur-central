@@ -1,6 +1,5 @@
 const chai = require('chai'),
     chaiHTTP = require('chai-http'),
-    should = chai.should(),
     app = require('../api'),
     jwt = require('jsonwebtoken'),
     db = require('../models'),
@@ -12,11 +11,8 @@ let configId = 0;
 
 describe('Zone', () => {
     before(() => {
-        let user = null;
-
         return Promise.all([
             db.User.findOne({ where: { username: 'thomas' } }).then(u => {
-                user = u;
                 token = jwt.sign({ id: u.id }, secret, {
                     expiresIn: '1m'
                 });
@@ -125,7 +121,9 @@ describe('Zone', () => {
                     })
                     .end((err, res) => {
                         res.should.have.status(200);
-                        res.body.position.coordinates[0][1][0].should.be.equal(102.0)
+                        res.body.position.coordinates[0][1][0].should.be.equal(
+                            102.0
+                        );
                         done();
                     });
             });

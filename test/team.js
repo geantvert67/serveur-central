@@ -1,6 +1,5 @@
 const chai = require('chai'),
     chaiHTTP = require('chai-http'),
-    should = chai.should(),
     app = require('../api'),
     jwt = require('jsonwebtoken'),
     db = require('../models'),
@@ -12,11 +11,8 @@ let configId = 0;
 
 describe('Équipe', () => {
     before(() => {
-        let user = null;
-
         return Promise.all([
             db.User.findOne({ where: { username: 'thomas' } }).then(u => {
-                user = u;
                 token = jwt.sign({ id: u.id }, secret, {
                     expiresIn: '1m'
                 });

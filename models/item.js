@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
      *           type: integer
      *           minimum: 1
      *           maximum: 10
+     *           description: Nombre d'items à cette position.
      *         position:
+     *           description: Position de l'item.
      *           type: object
      *           properties:
      *             type:
@@ -25,6 +27,16 @@ module.exports = (sequelize, DataTypes) => {
      *               items:
      *                 type: number
      *                 format: double
+     *         effectDuration:
+     *           type: integer
+     *           minimum: 1
+     *           maximum: 31536000
+     *           description: Durée de l'effet de l'item.
+     *         effectStrength:
+     *           type: number
+     *           format: double
+     *           minimum: 0.1
+     *           description: Impact de l'item sur le rayon de visibilité.
      *       example:
      *         quantity: 5
      *         position: { type: 'Point', coordinates: [39.807222,-76.984722]}
