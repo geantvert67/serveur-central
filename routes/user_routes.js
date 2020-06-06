@@ -123,7 +123,7 @@ module.exports = [
      *   /user/invitations:
      *     get:
      *       summary: Lister ses demandes à rejoindre une partie
-     *       tags: [User]
+     *       tags: [Invitation]
      *       security:
      *         - JWTAuth: []
      *       responses:
@@ -148,7 +148,7 @@ module.exports = [
      *   /user/invitations/{invitation_id}:
      *     delete:
      *       summary: Supprimer une de ses demande à rejoindre une partie
-     *       tags: [User]
+     *       tags: [Invitation]
      *       security:
      *         - JWTAuth: []
      *       parameters:
@@ -185,7 +185,27 @@ module.exports = [
      *   /user/history:
      *     get:
      *       summary: Lister tous ses historiques de partie
-     *       tags: [User]
+     *       tags: [History]
+     *       parameters:
+     *         - in: query
+     *           name: date
+     *           schema:
+     *             type: string
+     *             format: date
+     *           description:
+     *             Date jusqu'à laquelle on veur afficher l'historique
+     *         - in: query
+     *           name: page
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Numéro de la page dans la pagination
+     *         - in: query
+     *           name: pageSize
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Nombre d'éléments à afficher par page dans la pagination
      *       responses:
      *         "200":
      *            description: Historiques récupérés

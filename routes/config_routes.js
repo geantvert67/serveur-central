@@ -16,6 +16,27 @@ module.exports = [
      *       tags: [Config]
      *       security:
      *         - JWTAuth : []
+     *       parameters:
+     *         - in: query
+     *           name: page
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Numéro de la page dans la pagination
+     *         - in: query
+     *           name: pageSize
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Nombre d'éléments à afficher par page dans la pagination
+     *         - in: query
+     *           name: gameModes
+     *           schema:
+     *             type: array
+     *             items:
+     *               type: string
+     *           description:
+     *             Modes de jeu à afficher
      *       responses:
      *         "200":
      *           description: Configurations récupérées
@@ -249,6 +270,27 @@ module.exports = [
      *       tags: [Config]
      *       security:
      *         - JWTAuth : []
+     *       parameters:
+     *         - in: query
+     *           name: page
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Numéro de la page dans la pagination
+     *         - in: query
+     *           name: pageSize
+     *           schema:
+     *             type: integer
+     *           description:
+     *             Nombre d'éléments à afficher par page dans la pagination
+     *         - in: query
+     *           name: gameModes
+     *           schema:
+     *             type: array
+     *             items:
+     *               type: string
+     *           description:
+     *             Modes de jeu à afficher
      *       responses:
      *         "200":
      *           description: Configurations récupérées
