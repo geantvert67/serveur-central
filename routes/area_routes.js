@@ -7,12 +7,6 @@ const area_ctrl = require('../controllers/area_ctrl'),
  *   name: Area
  */
 module.exports = [
-    {
-        url: '/configs/:config_id/areas',
-        method: 'use',
-        func: config_ctrl.isConfigOwner
-    },
-
     /**
      * @swagger
      * path:
@@ -88,7 +82,7 @@ module.exports = [
     {
         url: '/configs/:config_id/areas',
         method: 'post',
-        func: area_ctrl.create
+        func: [area_ctrl.create, config_ctrl.isConfigOwner]
     },
 
     /**
@@ -123,13 +117,13 @@ module.exports = [
     {
         url: '/configs/:config_id/areas',
         method: 'delete',
-        func: area_ctrl.deleteAll
+        func: [config_ctrl.isConfigOwner, area_ctrl.deleteAll]
     },
 
     {
         url: '/configs/:config_id/areas/:area_id',
         method: 'use',
-        func: area_ctrl.loadById
+        func: [config_ctrl.isConfigOwner, area_ctrl.loadById]
     },
 
     /**

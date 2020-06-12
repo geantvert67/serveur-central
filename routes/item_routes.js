@@ -1,4 +1,5 @@
-const item_ctrl = require('../controllers/item_ctrl');
+const item_ctrl = require('../controllers/item_ctrl'),
+    config_ctrl = require('../controllers/config_ctrl');
 
 /**
  * @swagger
@@ -71,7 +72,7 @@ module.exports = [
     {
         url: '/configs/:config_id/items',
         method: 'delete',
-        func: item_ctrl.deleteAllFromConfig
+        func: [config_ctrl.isConfigOwner, item_ctrl.deleteAllFromConfig]
     },
 
     /**
@@ -127,13 +128,13 @@ module.exports = [
     {
         url: '/configs/:config_id/items',
         method: 'post',
-        func: item_ctrl.create
+        func: [config_ctrl.isConfigOwner, item_ctrl.create]
     },
 
     {
         url: '/configs/:config_id/items/:item_id',
         method: 'use',
-        func: item_ctrl.loadById
+        func: [config_ctrl.isConfigOwner, item_ctrl.loadById]
     },
 
     /**
