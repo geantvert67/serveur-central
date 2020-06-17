@@ -7,12 +7,6 @@ const flag_ctrl = require('../controllers/flag_ctrl'),
  *  name: Flag
  */
 module.exports = [
-    {
-        url: '/configs/:config_id/flags',
-        method: 'use',
-        func: config_ctrl.isConfigOwner
-    },
-
     /**
      * @swagger
      * path:
@@ -89,7 +83,7 @@ module.exports = [
     {
         url: '/configs/:config_id/flags',
         method: 'post',
-        func: flag_ctrl.create
+        func: [config_ctrl.isConfigOwner, flag_ctrl.create]
     },
 
     /**
@@ -124,13 +118,13 @@ module.exports = [
     {
         url: '/configs/:config_id/flags',
         method: 'delete',
-        func: flag_ctrl.deleteAll
+        func: [config_ctrl.isConfigOwner, flag_ctrl.deleteAll]
     },
 
     {
         url: '/configs/:config_id/flags/:flag_id',
         method: 'use',
-        func: flag_ctrl.loadById
+        func: [config_ctrl.isConfigOwner, flag_ctrl.loadById]
     },
     /**
      * @swagger

@@ -7,12 +7,6 @@ const item_model_ctrl = require('../controllers/item_model_ctrl'),
  *   name: ItemModel
  */
 module.exports = [
-    {
-        url: '/configs/:config_id/item-models',
-        method: 'use',
-        func: config_ctrl.isConfigOwner
-    },
-
     /**
      * @swagger
      * path:
@@ -84,13 +78,13 @@ module.exports = [
     {
         url: '/configs/:config_id/item-models',
         method: 'post',
-        func: item_model_ctrl.create
+        func: [config_ctrl.isConfigOwner, item_model_ctrl.create]
     },
 
     {
         url: '/configs/:config_id/item-models/:item_model_id',
         method: 'use',
-        func: item_model_ctrl.loadById
+        func: [config_ctrl.isConfigOwner, item_model_ctrl.loadById]
     },
 
     /**
