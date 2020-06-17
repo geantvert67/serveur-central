@@ -119,25 +119,15 @@ const _this = (module.exports = {
         })
             .then(config => {
                 if (config) {
-                    const { mode } = req.query;
-                    let configPath = 'public/Docker_linux/config/config.json';
-                    let folderPath = 'public/Docker_linux';
-
-                    if (mode === 'rapide') {
-                        configPath =
-                            'public/Docker_mac/Config_docker/config/config.json';
-                        folderPath = 'public/Docker_mac';
-                    }
-
                     return fs.writeFile(
-                        configPath,
+                        'public/Docker_linux/config/config.json',
                         JSON.stringify(config.get({ plain: true })),
                         { flag: 'w' },
                         err => {
                             if (err) next(err);
 
                             const zip = new AdmZip();
-                            zip.addLocalFolder(folderPath);
+                            zip.addLocalFolder('public/Docker_linux');
                             zip.writeZip('public/crystalz.zip');
 
                             return res.sendFile('crystalz.zip', {
